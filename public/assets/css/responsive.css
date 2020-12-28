@@ -1,0 +1,19 @@
+@media (min-width:768px){
+
+}
+@media (max-width:991px){
+    .datepickerbox .card{
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    .progressbar{
+        margin: 20px auto;
+    }
+}
+@media (max-width:767px){
+  
+}
+@media 
+only screen and (max-width: 760px) {
+
+}

@@ -83,7 +83,7 @@ function Grant() {
                 <div className="tell-us-about-your-company-right-section">
                     <hr className="tell-us-about-your-company-line1" />
                     <div className="tell-us-about-your-company-right-section-img">
-                        <img src="assets/images/bulb-icon.png"alt="bulb-icon" />
+                        <img src="assets/images/bulb-icon.png" alt="bulb-icon" />
                     </div>
                     <p>We use Companies House publicly available data to retrieve information about your company. By using Companies House data, we can tell you exactly how many R&D claims you can make for your company. If we cannot find your company details not to worry, you can continue to use the company name you entered above.
                     </p>

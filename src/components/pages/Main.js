@@ -5,21 +5,21 @@ import ClaimPeriod from './ClaimPeriod';
 import Grant from './Grant';
 import Expenses from './Expenses';
 
-const Main = ()=>{
-    return(
+const Main = () => {
+    return (
         <div>
-            <Header/>
+            <Header />
             <section className="tell-us-about-your-company">
-              <div className="container-fluid">
-                <div className="tell-us-about-your-company-section">
-                    <CompanyDetails/>
-                    <ClaimPeriod/>
-                    <Grant/>
-                    <Expenses/>
+                <div className="container-fluid">
+                    <div className="tell-us-about-your-company-section">
+                        <CompanyDetails />
+                        <ClaimPeriod />
+                        <Grant />
+                        <Expenses />
+                    </div>
                 </div>
-             </div>
             </section>
-            <Footer/>
+            <Footer />
         </div>
     )
 }

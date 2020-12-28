@@ -23,7 +23,7 @@ const ClaimPeriod = (props) => {
     const [secondDate, setSecondDate] = useState("")
     const [valstartDate, valsetStartDate] = useState("");
     const [valendDate, valsetEndDate] = useState("");
-    const [firstClick,setFirstClick] = useState(false)
+    const [firstClick, setFirstClick] = useState(false)
     const [dateRange, setdateRange] = useState({
         startDate: null,
         endDate: null
@@ -122,7 +122,7 @@ const ClaimPeriod = (props) => {
     }
 
 
-    console.log("firstClickfirstClick",firstClick)
+    console.log("firstClickfirstClick", firstClick)
 
     return (
         <div className={firstClick === false ? "row custom-m-top-40 click" : "row custom-m-top-40"} onClick={handleClick} >

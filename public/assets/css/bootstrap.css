@@ -67,6 +67,10 @@ body {
   outline: 0 !important;
 }
 
+.click {
+  opacity:0.4
+}
+
 hr {
   box-sizing: content-box;
   height: 0;

@@ -12,7 +12,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ];
 
-const month = ["00","01","02","03","04","05","06","07","08","09","10","11","12"];
+const month = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
 const ClaimPeriod = (props) => {
     console.log("-----------------", props)
@@ -23,8 +23,9 @@ const ClaimPeriod = (props) => {
     const [secondDate, setSecondDate] = useState("")
     const [valstartDate, valsetStartDate] = useState("");
     const [valendDate, valsetEndDate] = useState("");
+    const [firstClick,setFirstClick] = useState(false)
     const [dateRange, setdateRange] = useState({
-        startDate:null,
+        startDate: null,
         endDate: null
     });
     // const [startDate,setstartDate] = useState(null)
@@ -37,7 +38,7 @@ const ClaimPeriod = (props) => {
 
     const handleOnDateChange = (startDate, endDate) => {
         console.log("handledatachange", startDate, endDate)
-        setdateRange(startDate,endDate);
+        setdateRange(startDate, endDate);
         setDateBool(true)
     }
 
@@ -81,7 +82,8 @@ const ClaimPeriod = (props) => {
 
 
     const handleClick = () => {
-
+        console.log("clicked")
+        setFirstClick(true)
     }
 
     const firstDateChange = (e) => {
@@ -93,7 +95,7 @@ const ClaimPeriod = (props) => {
             setHideDate(true);
             console.log("hai")
             setValDate(e.target.value + '/')
-        } if(e.target.value.length === 5) {
+        } if (e.target.value.length === 5) {
             setValDate(e.target.value + '/20')
         }
     }
@@ -106,7 +108,7 @@ const ClaimPeriod = (props) => {
         } if (e.target.value.length === 2) {
             console.log("hai")
             setSecondDate(e.target.value + '/')
-        } if(e.target.value.length === 5) {
+        } if (e.target.value.length === 5) {
             setSecondDate(e.target.value + '/20')
         }
     }
@@ -120,14 +122,10 @@ const ClaimPeriod = (props) => {
     }
 
 
-    console.log("---------------------------------------",valDate!==null && valDate.length===10 ? moment(valDate).format("MM/DD/YYYY") : null)
-
-    const temp = valDate!==null && valDate.length===10 ? moment(valDate) : null
-
-    console.log("temp",moment(startDate).format("MM/DD/YYYY"))
+    console.log("firstClickfirstClick",firstClick)
 
     return (
-        <div className="row custom-m-top-40" >
+        <div className={firstClick === false ? "row custom-m-top-40 click" : "row custom-m-top-40"} onClick={handleClick} >
             <div className="col-md-3 col-xl-3 col-lg-3 col-sm-3 col-12">
                 <div className="tell-us-about-your-company-left-section">
                     <hr className="tell-us-about-your-company-line" />
@@ -188,8 +186,8 @@ const ClaimPeriod = (props) => {
 
                                         onKeyPress={dateKey}
                                         value={
-                                         
-                                                datebool === true && endDate!==null ? moment(endDate._d).format("DD/MM/YYYY") :  secondDate}
+
+                                            datebool === true && endDate !== null ? moment(endDate._d).format("DD/MM/YYYY") : secondDate}
                                         onChange={secondDateChange}
                                         maxlength={10}
                                     // onChange={DateChange}
@@ -229,12 +227,12 @@ const ClaimPeriod = (props) => {
                             <DateRangePicker
                                 startDatePlaceholderText="Start"
                                 startDate={
-                                    
-                                   startDate}
+                                    valDate !== null && valDate.length === 10 ? moment(valDate) :
+                                        startDate}
                                 required={false}
                                 onDatesChange={handleOnDateChange}
                                 endDatePlaceholderText="End"
-                                endDate={ endDate}
+                                endDate={secondDate !== null && secondDate.length === 10 ? moment(secondDate) : endDate}
                                 reopenPickerOnClearDate={true}
                                 displayFormat={"MM/DD/YYYY"}
                                 readOnly={false}

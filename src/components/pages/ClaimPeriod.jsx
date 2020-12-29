@@ -3,7 +3,7 @@ import Dates from '../common/Dates';
 import moment from "moment";
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
-import { DateRangePicker } from 'react-dates';
+import { DateRangePicker, DayPickerRangeController } from 'react-dates';
 import './picker.css'
 
 
@@ -32,11 +32,12 @@ const ClaimPeriod = (props) => {
     // const [endDate,setendDate] = useState(null)
     const [datebool, setDateBool] = useState(false)
     const [focus, setFocus] = useState("startDate");
-
+    const [focusedInput, setFocusedInput] = useState('startDate');
 
     const { startDate, endDate } = dateRange;
 
     const handleOnDateChange = (startDate, endDate) => {
+        console.log("enddate", endDate)
         console.log("handledatachange", startDate, endDate)
         setdateRange(startDate, endDate);
         setDateBool(true)
@@ -87,7 +88,7 @@ const ClaimPeriod = (props) => {
     }
 
     const firstDateChange = (e) => {
-        console.log("sreedev--------", e)
+        console.log("sreedev--------", e.target.value)
         if (e.target.value.length >= 1) {
             setHideDate(true);
             setValDate(e.target.value)
@@ -96,11 +97,10 @@ const ClaimPeriod = (props) => {
             console.log("hai")
             setValDate(e.target.value + '/')
         } if (e.target.value.length === 5) {
-            setValDate(e.target.value + '/20')
+            setValDate(e.target.value + '/')
         }
     }
 
-    console.log("valDate", valDate);
 
     const secondDateChange = (e) => {
         if (e.target.value.length >= 1) {
@@ -109,7 +109,7 @@ const ClaimPeriod = (props) => {
             console.log("hai")
             setSecondDate(e.target.value + '/')
         } if (e.target.value.length === 5) {
-            setSecondDate(e.target.value + '/20')
+            setSecondDate(e.target.value + '/')
         }
     }
 
@@ -122,7 +122,7 @@ const ClaimPeriod = (props) => {
     }
 
 
-    console.log("firstClickfirstClick", firstClick)
+console.log("startdat",startDate!==null ? moment(startDate._d).format("DD/MM/YYYY") : null)
 
     return (
         <div className={firstClick === false ? "row custom-m-top-40 click" : "row custom-m-top-40"} onClick={handleClick} >
@@ -170,7 +170,8 @@ const ClaimPeriod = (props) => {
                                         // value={datebool === true && startDate !== null ?
                                         //     moment(startDate._d).format("DD/MM/YYYY") : "dd/mm/yyyy"} 
                                         onKeyPress={dateKey}
-                                        value={datebool === true ? moment(startDate._d).format("DD/MM/YYYY") : valDate}
+                                        placeholder={"DD/MM/YYYY"}
+                                        value={datebool === true ? startDate!==null && moment(startDate._d).format("DD/MM/YYYY") : valDate}
                                         onChange={firstDateChange}
                                         maxlength={10}
                                     />
@@ -185,6 +186,7 @@ const ClaimPeriod = (props) => {
                                         //     moment(endDate._d).format("DD/MM/YYYY") : "dd/mm/yyyy"}
 
                                         onKeyPress={dateKey}
+                                        placeholder={"DD/MM/YYYY"}
                                         value={
 
                                             datebool === true && endDate !== null ? moment(endDate._d).format("DD/MM/YYYY") : secondDate}
@@ -224,17 +226,18 @@ const ClaimPeriod = (props) => {
                                     <a className="nav-link" href="#claim-end" role="tab" data-toggle="tab">Claim Period End Date</a>
                                 </li>
                             </ul>
-                            <DateRangePicker
+                            {/* <DateRangePicker
                                 startDatePlaceholderText="Start"
                                 startDate={
-                                    valDate !== null && valDate.length === 10 ? moment(valDate) :
+                                    valDate !== null && valDate.length === 10 ?  moment(valDate, 'DD/MM/YYYY'):
                                         startDate}
-                                required={false}
+                                // required={false}
                                 onDatesChange={handleOnDateChange}
                                 endDatePlaceholderText="End"
-                                endDate={secondDate !== null && secondDate.length === 10 ? moment(secondDate) : endDate}
+                                 endDate={secondDate !== null && secondDate.length === 10 ? moment(secondDate, 'DD/MM/YYYY') : endDate}
                                 reopenPickerOnClearDate={true}
-                                displayFormat={"MM/DD/YYYY"}
+                                displayFormat={"DD/MM/YYYY"}
+                                //isDayHighlighted={()=>secondDate !== null && secondDate.length === 10 ? moment(secondDate, 'DD/MM/YYYY') : endDate}
                                 readOnly={false}
                                 showClearDates={true}
                                 focusedInput={focus}
@@ -242,7 +245,35 @@ const ClaimPeriod = (props) => {
                                 startDateId="startDateMookh"
                                 endDateId="endDateMookh"
                                 minimumNights={0}
-                            />
+                                isOutsideRange={() => false}
+                              
+                            /> */}
+
+
+<DayPickerRangeController
+                                    focused
+                                    key={Math.random()}
+                                    daySize={40}
+                                    className="Datezp8"
+                                    horizontalMonthPadding={1}
+                                    // autoFocusEndDate={true}
+                                    numberOfMonths={2}
+                                    startDate={
+                                        valDate !== null && valDate.length === 10 ?  moment(valDate, 'DD/MM/YYYY'):
+                                            startDate}
+                                            endDate={secondDate !== null && secondDate.length === 10 ? moment(secondDate, 'DD/MM/YYYY') : endDate}
+                                    onDatesChange={handleOnDateChange}
+                                    focusedInput={focusedInput}
+                                    onFocusChange={e => setFocusedInput(e)}
+                                    isOutsideRange={() => false}
+                                    
+                                   
+                                    
+                                   
+                                    
+                             
+                                /> 
+
                             <div className="tab-content">
                                 <div role="tabpanel" className="tab-pane fade in active show" id="claim-start">
                                     <div id="datepicker" className="calendar">

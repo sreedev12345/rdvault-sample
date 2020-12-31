@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 function Expenses() {
+    const companyresponse = useSelector(state => state.grantPeriod);
+    console.log("--------------",companyresponse)
     return (
-        <div className="rdexpenses_section row custom-m-top-40">
+        <div id="expense" className={companyresponse.data === true ? "rdexpenses_section row custom-m-top-40" : "rdexpenses_section row custom-m-top-40 click"}>
             <div className="col-md-3 col-xl-3 col-lg-3 col-sm-3 col-12">
                 <div className="tell-us-about-your-company-left-section">
                     <hr className="tell-us-about-your-company-line" />

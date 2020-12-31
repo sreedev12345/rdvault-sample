@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from 'react';
-
+import { grant } from '../../components/redux/action/Grant';
+import { useSelector, useDispatch } from 'react-redux';
 
 function Grant() {
+    const dispatch = useDispatch()
+    const companyclaim = useSelector(state => state.claimReducer)
     const [grantno, setGrantNo] = useState(false);
     const [grantyes, setGrantYes] = useState(false);
 
     const handleNo = () => {
         setGrantNo(!grantno);
-        setGrantYes(false)
+        setGrantYes(false);
+        dispatch(grant(!grantno))
+        // console.log("grantno",!grantno)
+        const elmnt = document.getElementById("expense");
+        elmnt.scrollIntoView();
     }
 
     const handleYes = () => {
         setGrantNo(false);
         setGrantYes(!grantyes)
+        dispatch(grant(!grantyes))
+        const elmnt = document.getElementById("expense");
+        elmnt.scrollIntoView();
     }
+
+    console.log("companyresponse",companyclaim)
     return (
-        <div className="grands_subsidies_section row custom-m-top-40">
+        <div id="expensess" className={companyclaim.claimdata === true ? "grands_subsidies_section row custom-m-top-40" : "grands_subsidies_section row custom-m-top-40 click"}>
             <div className="col-md-3 col-xl-3 col-lg-3 col-sm-3 col-12">
                 <div className="tell-us-about-your-company-left-section">
                     <hr className="tell-us-about-your-company-line" />

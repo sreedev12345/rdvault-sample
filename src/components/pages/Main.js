@@ -1,26 +1,36 @@
+import React, { useState } from 'react';
 import Header from './Header';
 import CompanyDetails from './CompanyDetails'
 import Footer from './Footer'
 import ClaimPeriod from './ClaimPeriod';
 import Grant from './Grant';
 import Expenses from './Expenses';
+import Context from '../common/Context'
 
-const Main = () => {
+
+const Main = (props) => {
+    const [value,setValue] = useState()
     return (
+
         <div>
+
             <Header />
             <section className="tell-us-about-your-company">
                 <div className="container-fluid">
                     <div className="tell-us-about-your-company-section">
-                        <CompanyDetails />
-                        <ClaimPeriod />
-                        <Grant />
-                        <Expenses />
+                   
+                            <CompanyDetails/>
+                            <ClaimPeriod />
+                            <Grant />
+                            <Expenses />
+                       
                     </div>
                 </div>
             </section>
             <Footer />
+
         </div>
+
     )
 }
 

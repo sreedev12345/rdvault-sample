@@ -1,5 +1,5 @@
 const grantPeriod = (state={},action)=>{
-    console.log("grant-period",action)
+    console.log("grant-period",action,action.type)
     if(action.type === 'GRANT_SUCCESS') {
         return Object.assign({},state,{
             status : action.status,

@@ -4,30 +4,44 @@ import { useSelector, useDispatch } from 'react-redux';
 
 function Grant() {
     const dispatch = useDispatch()
-    const companyclaim = useSelector(state => state.claimReducer)
+    const companyclaim = useSelector(state => state);
+  
     const [grantno, setGrantNo] = useState(false);
     const [grantyes, setGrantYes] = useState(false);
+
+
+    useEffect(()=>{
+        console.log("sreedev",grantyes,grantno)
+        if(grantyes === true || grantno===true) {
+            const elmnt = document.getElementById("expense");
+            elmnt.scrollIntoView();
+        }
+    },[grantyes === true || grantno===true ])
+
 
     const handleNo = () => {
         setGrantNo(!grantno);
         setGrantYes(false);
-        dispatch(grant(!grantno))
+        dispatch(grant(!grantno));
         // console.log("grantno",!grantno)
-        const elmnt = document.getElementById("expense");
-        elmnt.scrollIntoView();
+        // const elmnt = document.getElementById("expense");
+        // elmnt.scrollIntoView();
     }
 
     const handleYes = () => {
         setGrantNo(false);
         setGrantYes(!grantyes)
         dispatch(grant(!grantyes))
-        const elmnt = document.getElementById("expense");
-        elmnt.scrollIntoView();
+        // const elmnt = document.getElementById("expense");
+        // elmnt.scrollIntoView();
     }
 
-    console.log("companyresponse",companyclaim)
+
+    console.log("companyclaimcompanyclaim",companyclaim)
+
     return (
-        <div id="expensess" className={companyclaim.claimdata === true ? "grands_subsidies_section row custom-m-top-40" : "grands_subsidies_section row custom-m-top-40 click"}>
+        <div id="expensess" className={companyclaim.claimReducer.claimdata === true  && 
+            companyclaim.companyReducer.data === true ? "grands_subsidies_section row custom-m-top-40" : "grands_subsidies_section row custom-m-top-40 click"}>
             <div className="col-md-3 col-xl-3 col-lg-3 col-sm-3 col-12">
                 <div className="tell-us-about-your-company-left-section">
                     <hr className="tell-us-about-your-company-line" />
@@ -56,7 +70,9 @@ function Grant() {
                                                         className="checkbox-custom"
                                                         id="noti_8" value="3"
                                                         type="checkbox"
-                                                        checked={grantno}
+                                                        checked={
+                                                            grantno ===true && companyclaim.claimReducer.claimdata === true  && 
+                                                            companyclaim.companyReducer.data === true ? grantno : false}
                                                         onChange={handleNo
                                                         }
                                                     />
@@ -77,7 +93,8 @@ function Grant() {
                                                         className="checkbox-custom"
                                                         id="noti_9" value="3"
                                                         type="checkbox"
-                                                        checked={grantyes}
+                                                        checked={ grantyes ===true && companyclaim.claimReducer.claimdata === true  && 
+                                                            companyclaim.companyReducer.data === true ? grantyes : false}
                                                         onChange={handleYes}
                                                     />
                                                     <label className="checkbox-custom-label" for="noti_9"></label>

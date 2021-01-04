@@ -18,7 +18,6 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 const month = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
 const ClaimPeriod = (props) => {
-    console.log("-----------------", props)
     const dispatch = useDispatch();
     const companyresponse = useSelector(state => state.companyReducer)
     const [data, setData] = useState([]);
@@ -42,11 +41,14 @@ const ClaimPeriod = (props) => {
     const { startDate, endDate } = dateRange;
 
     const handleOnDateChange = (startDate, endDate) => {
-        console.log("enddate", endDate)
-        console.log("handledatachange", startDate, endDate)
         setdateRange(startDate, endDate);
         setDateBool(true)
     }
+
+
+    useEffect(()=>{
+        setCheckData(Dates)
+    },[])
 
     useEffect(()=>{
         if(endDate) {
@@ -58,7 +60,7 @@ const ClaimPeriod = (props) => {
 
 
     const onFocusChange = (focus) => {
-        console.log("focus", focus)
+  
         setFocus(focus)
         if (focus) {
             setFocus(focus)
@@ -70,26 +72,29 @@ const ClaimPeriod = (props) => {
         setData(Dates)
     }, [])
 
+    console.log("companyresponsevv",checkData)
+
     const handelCheckBox = (e) => {
         const mapdata = data.map((val, index) => {
             if (val.name === e.target.name && val.checked === false) {
                 val.checked = true;
+                dispatch(claimPeriod(true)) 
                 valsetStartDate(val.startdate.getDate() + "/" + monthNames[val.startdate.getMonth()] + "/" + val.startdate.getFullYear())
                 valsetEndDate(val.enddate.getDate() + "/" + monthNames[val.enddate.getMonth()] + "/" + val.enddate.getFullYear())
-                if(val.checked === true) {
-                    dispatch(claimPeriod(true))
-                    const elmnt = document.getElementById("expensess");
-                    elmnt.scrollIntoView();
-                }
                 return val;
-            } else {
+            } 
+            else if(val.name === e.target.name && val.checked === true) {
+                dispatch(claimPeriod(false));
                 val.checked = false;
-                const elmnt = document.getElementById("company-id");
-                    elmnt.scrollIntoView();
-                
+                return val;
+            }  
+            else {
+                val.checked = false;
                 return val;
             }
         })
+        const elmnt = document.getElementById("expensess");
+        elmnt.scrollIntoView();
         setCheckData(mapdata);
     }
 
@@ -100,21 +105,21 @@ const ClaimPeriod = (props) => {
     //       }
     //   })
 
-
+console.log("mapdatamapdata",checkData)
 
     const handleClick = () => {
-        console.log("clicked")
+    
         setFirstClick(true)
     }
 
     const firstDateChange = (e) => {
-        console.log("sreedev--------", e.target.value)
+    
         if (e.target.value.length >= 1) {
             setHideDate(true);
             setValDate(e.target.value)
         } if (e.target.value.length === 2) {
             setHideDate(true);
-            console.log("hai")
+          
             setValDate(e.target.value + '/')
         } if (e.target.value.length === 5) {
             setValDate(e.target.value + '/')
@@ -126,7 +131,7 @@ const ClaimPeriod = (props) => {
         if (e.target.value.length >= 1) {
             setSecondDate(e.target.value)
         } if (e.target.value.length === 2) {
-            console.log("hai")
+        
             setSecondDate(e.target.value + '/')
         } if (e.target.value.length === 5) {
             setSecondDate(e.target.value + '/')
@@ -137,20 +142,15 @@ const ClaimPeriod = (props) => {
     }
 
     const dateKey = (e) => {
-        console.log("dev---------", e.charCode)
+     
         if (e.charCode < 48 || e.charCode > 57) {
             e.preventDefault();
             return false
         }
     }
 
+console.log("vcheckData",checkData)
 
-    console.log("startdat", startDate !== null ? moment(startDate._d).format("DD/MM/YYYY") : null);
-
-
-
-
-    console.log("companyresponsecompanyresponse",companyresponse)
 
     return (
         <>
@@ -168,7 +168,7 @@ const ClaimPeriod = (props) => {
                                 estimate your R&D claim for?
                         </p>
                             {
-                                Dates.length >= 1 ? Dates.map((ele, index) => {
+                                checkData.length >= 1 ? checkData.map((ele, index) => {
                                     return (
                                         <div className="custom-checbox-1 tell-us-about-your-company-card-section-label">
                                             <span>Period {ele.id}:{
@@ -180,7 +180,7 @@ const ClaimPeriod = (props) => {
                                                         className="checkbox-custom"
                                                         id={ele.id}
                                                         type="checkbox"
-                                                        checked={ele.checked}
+                                                        checked={companyresponse.data === true && ele.checked === true ? true : false}
                                                         onChange={handelCheckBox}
                                                     //  disabled={datebool === true ? !ele.checked : ele.checked}
                                                     />

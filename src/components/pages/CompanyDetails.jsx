@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from "react-redux";
 import { companyAction } from '../../components/redux/action/CompanyAction';
+import { claimPeriod } from '../../components/redux/action/ClaimPeriod';
 import Data from '../common/Data';
 
 
@@ -13,14 +14,17 @@ const CompanyDetails = (props) => {
     const dataPerPage = 5;
     const [currentPage, setCurrentPage] = useState(1)
     const [check, setCheck] = useState([]);
+    let checkes = false
  
 
 
-    console.log("props", props)
+
 
     useEffect(()=>{
         window.scrollTo(0,0);
     },[])
+
+  
 
 
     useEffect(() => {
@@ -62,33 +66,41 @@ const CompanyDetails = (props) => {
 
 
     const handleClick = (e) => {   //onchange for checkbox
-        console.log("checkcheck", inputEl.current)
+     
+
         const filterdata = renderData.map((check, index) => {
             if (check.company === e.target.name && check.checked === false) {
                 check.checked = true;
+                dispatch(companyAction(true));
                 return check
-            } 
+            } else if(check.company === e.target.name && check.checked === true) {
+                dispatch(companyAction(false));
+                check.checked = false;
+                return check
+            }
             else {
                 check.checked = false;
-                console.log("check-else", check)
                 return check
             }
 
         })
-
-        dispatch(companyAction(true))
         var elmnt = document.getElementById("claim-period");
         elmnt.scrollIntoView();
         setCheck(filterdata);
     }
 
-    let checkes = false
 
 
 
-    check && check.map(data=> data.checked === true ? true : false) // logic for completed status
+    check && check.map((data, i) => { // logic for completed status
      
-    
+        if (data.checked === true) {
+            checkes = data.checked;
+         
+           
+            checkes = data.checked;
+        } 
+    })
 
   
 

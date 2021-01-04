@@ -67,6 +67,10 @@ body {
   outline: 0 !important;
 }
 
+.date-error {
+  color:red;
+}
+
 .click {
   opacity:0.4;
   pointer-events: none;

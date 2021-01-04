@@ -85,7 +85,7 @@ const CompanyDetails = (props) => {
 
         })
         var elmnt = document.getElementById("claim-period");
-        elmnt.scrollIntoView();
+        elmnt.scrollIntoView({behavior: "smooth"});
         setCheck(filterdata);
     }
 

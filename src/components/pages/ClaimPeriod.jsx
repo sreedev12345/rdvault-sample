@@ -15,11 +15,16 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ];
 
+var regex = /^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$/g;
+
 const month = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
 const ClaimPeriod = (props) => {
     const dispatch = useDispatch();
-    const companyresponse = useSelector(state => state.companyReducer)
+    const companyresponse = useSelector(state => state.companyReducer);
+    const emo = useSelector(state => state);
+    const [firstDateMessage, setFirstDateMessage] = useState("");
+    const [secondDateMessage, setSecondDateMessage] = useState("")
     const [data, setData] = useState([]);
     const [checkData, setCheckData] = useState([]);
     const [valDate, setValDate] = useState(null);
@@ -46,21 +51,22 @@ const ClaimPeriod = (props) => {
     }
 
 
-    useEffect(()=>{
+    useEffect(() => {
         setCheckData(Dates)
-    },[])
+    }, [])
 
-    useEffect(()=>{
-        if(endDate) {
+    useEffect(() => {
+        if (endDate) {
             dispatch(claimPeriod(true))
             const elmnt = document.getElementById("expensess");
-            elmnt.scrollIntoView();
+            elmnt.scrollIntoView({ behavior: "smooth" });
         }
-    },[endDate])
+
+    }, [endDate])
 
 
     const onFocusChange = (focus) => {
-  
+
         setFocus(focus)
         if (focus) {
             setFocus(focus)
@@ -72,29 +78,29 @@ const ClaimPeriod = (props) => {
         setData(Dates)
     }, [])
 
-    console.log("companyresponsevv",checkData)
+    console.log("emo", emo)
 
     const handelCheckBox = (e) => {
         const mapdata = data.map((val, index) => {
             if (val.name === e.target.name && val.checked === false) {
                 val.checked = true;
-                dispatch(claimPeriod(true)) 
+                dispatch(claimPeriod(true))
                 valsetStartDate(val.startdate.getDate() + "/" + monthNames[val.startdate.getMonth()] + "/" + val.startdate.getFullYear())
                 valsetEndDate(val.enddate.getDate() + "/" + monthNames[val.enddate.getMonth()] + "/" + val.enddate.getFullYear())
                 return val;
-            } 
-            else if(val.name === e.target.name && val.checked === true) {
+            }
+            else if (val.name === e.target.name && val.checked === true) {
                 dispatch(claimPeriod(false));
                 val.checked = false;
                 return val;
-            }  
+            }
             else {
                 val.checked = false;
                 return val;
             }
         })
         const elmnt = document.getElementById("expensess");
-        elmnt.scrollIntoView();
+        elmnt.scrollIntoView({ behavior: "smooth" });
         setCheckData(mapdata);
     }
 
@@ -105,51 +111,75 @@ const ClaimPeriod = (props) => {
     //       }
     //   })
 
-console.log("mapdatamapdata",checkData)
+    console.log("mapdatamapdata", checkData)
 
     const handleClick = () => {
-    
+
         setFirstClick(true)
     }
 
     const firstDateChange = (e) => {
-    
-        if (e.target.value.length >= 1) {
-            setHideDate(true);
-            setValDate(e.target.value)
-        } if (e.target.value.length === 2) {
-            setHideDate(true);
-          
-            setValDate(e.target.value + '/')
-        } if (e.target.value.length === 5) {
-            setValDate(e.target.value + '/')
+        setHideDate(true);
+        setValDate(e.target.value)
+        
+        const match = regex.test(e.target.value)
+        if (e.target.value.length < 10) {
+            setFirstDateMessage("Date is invalid");
+            dispatch(claimPeriod(false));
         }
+        if (match === false) {
+            setFirstDateMessage("Date is invalid")
+        } if (match === true) {
+            setFirstDateMessage(null)
+        }
+        //  if (e.target.value.length === 2) {
+        //     setHideDate(true);
+
+        //     setValDate(e.target.value + '/')
+        // } 
+        // if (e.target.value.length === 5) {
+        //     setValDate(e.target.value + '/')
+        // }
     }
 
 
     const secondDateChange = (e) => {
-        if (e.target.value.length >= 1) {
-            setSecondDate(e.target.value)
-        } if (e.target.value.length === 2) {
-        
-            setSecondDate(e.target.value + '/')
-        } if (e.target.value.length === 5) {
-            setSecondDate(e.target.value + '/')
+        const match = regex.test(e.target.value);
+        setSecondDate(e.target.value)
+       
+        if (e.target.value.length < 10) {
+            setSecondDateMessage("Date is invalid");
+            dispatch(claimPeriod(false));
         }
-        const elmnt = document.getElementById("expensess");
-        elmnt.scrollIntoView();
-        dispatch(claimPeriod(true))
+        if (match === false) {
+            setSecondDateMessage("Date is invalid")
+        }
+        //  if(match ===true) {
+        //     setFirstDateMessage("")
+        // }
+        // if (e.target.value.length === 2) {
+
+        //     setSecondDate(e.target.value + '/')
+        // } if (e.target.value.length === 5) {
+        //     setSecondDate(e.target.value + '/')
+        // }
+        if (match === true && e.target.value.length === 10) {
+            setSecondDateMessage("")
+            dispatch(claimPeriod(true))
+            const elmnt = document.getElementById("expensess");
+            elmnt.scrollIntoView({ behavior: "smooth" });
+        }
     }
 
     const dateKey = (e) => {
-     
+
         if (e.charCode < 48 || e.charCode > 57) {
             e.preventDefault();
             return false
         }
     }
 
-console.log("vcheckData",checkData)
+    console.log("vcheckData", companyresponse.data, valDate)
 
 
     return (
@@ -198,15 +228,22 @@ console.log("vcheckData",checkData)
                                         <input type="text" id="datepicker1"
                                             // value={datebool === true && startDate !== null ?
                                             //     moment(startDate._d).format("DD/MM/YYYY") : "dd/mm/yyyy"} 
-                                            onKeyPress={dateKey}
+                                            // onKeyPress={dateKey}
                                             placeholder={"DD/MM/YYYY"}
-                                            value={datebool === true ? startDate !== null && moment(startDate._d).format("DD/MM/YYYY") : valDate}
+                                            // value={datebool === true ? startDate !== null && moment(startDate._d).format("DD/MM/YYYY") : valDate}
+                                            value={
+                                                companyresponse.data === true && startDate !== null ? moment(startDate._d).format("DD/MM/YYYY") :
+                                                    companyresponse.data === true && valDate ? valDate : ""}
                                             onChange={firstDateChange}
                                             maxlength={10}
                                         />
                                         <span className="left-line">|</span>
+                                        <span className="date-error">
+                                            {firstDateMessage ? firstDateMessage : null}
+                                        </span>
                                     </div>
                                 </div>
+                                {/* <div>{firstDateMessage}</div> */}
                                 <div className="calendar-label-input form-group">
                                     <label>Claim Period End Date:</label>
                                     <div className="calendar-input-section">
@@ -214,16 +251,17 @@ console.log("vcheckData",checkData)
                                             // value={datebool === true && startDate !== null && endDate !== null ?
                                             //     moment(endDate._d).format("DD/MM/YYYY") : "dd/mm/yyyy"}
 
-                                            onKeyPress={dateKey}
+                                            // onKeyPress={dateKey}
                                             placeholder={"DD/MM/YYYY"}
                                             value={
-
-                                                datebool === true && endDate !== null ? moment(endDate._d).format("DD/MM/YYYY") : secondDate}
+                                                companyresponse.data === true && endDate !== null ? moment(endDate._d).format("DD/MM/YYYY") :
+                                                    companyresponse.data === true && secondDate ? secondDate : ""}
                                             onChange={secondDateChange}
                                             maxlength={10}
                                         // onChange={DateChange}
                                         />
                                         <span className="left-line">|</span>
+                                        <span className="date-error">{secondDateMessage ? secondDateMessage : null}</span>
                                     </div>
                                 </div>
                             </div>
@@ -288,9 +326,11 @@ console.log("vcheckData",checkData)
                                     // autoFocusEndDate={true}
                                     numberOfMonths={2}
                                     startDate={
-                                        valDate !== null && valDate.length === 10 ? moment(valDate, 'DD/MM/YYYY') :
-                                            startDate}
-                                    endDate={secondDate !== null && secondDate.length === 10 ? moment(secondDate, 'DD/MM/YYYY') : endDate}
+                                        companyresponse.data === true && valDate !== null && valDate.length === 10 && firstDateMessage === null ? 
+                                        moment(valDate, 'DD/MM/YYYY') :
+                                        companyresponse.data === true && startDate ? startDate : ""}
+                                    endDate={ companyresponse.data === true && secondDate !== null && secondDate.length === 10 ?
+                                         moment(secondDate, 'DD/MM/YYYY') :  companyresponse.data === true && endDate ? endDate : ""}
                                     onDatesChange={handleOnDateChange}
                                     focusedInput={focusedInput}
                                     onFocusChange={e => setFocusedInput(e)}

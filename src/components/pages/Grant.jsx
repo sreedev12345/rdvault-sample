@@ -14,7 +14,7 @@ function Grant() {
         console.log("sreedev",grantyes,grantno)
         if(grantyes === true || grantno===true) {
             const elmnt = document.getElementById("expense");
-            elmnt.scrollIntoView();
+            elmnt.scrollIntoView({behavior: "smooth"});
         }
     },[grantyes === true || grantno===true ])
 

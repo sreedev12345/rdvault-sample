@@ -1,13 +1,23 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
+
+
+import { useHistory } from "react-router-dom";
+
 
 function Expenses() {
+    let history = useHistory();
     const companyresponse = useSelector(state => state);
-    console.log("companyresponsecompanyresponse",companyresponse)
+    const claimPage = ()=>{
+        history.push('/secondpage')
+    }
+
+    console.log("state-state",companyresponse)
     return (
         <div id="expense" 
-            className={companyresponse.grantPeriod.data === true && 
-                companyresponse.companyReducer.data === true && companyresponse.claimReducer.claimdata === true ? "rdexpenses_section row custom-m-top-40" : 
+            className={ companyresponse.grantPeriod.data ===true  || companyresponse.grantPeriod.yes  === true && 
+                companyresponse.companyReducer.data === true && 
+                companyresponse.claimReducer.claimdata === true ? "rdexpenses_section row custom-m-top-40" : 
             "rdexpenses_section row custom-m-top-40 click"}>
             <div className="col-md-3 col-xl-3 col-lg-3 col-sm-3 col-12">
                 <div className="tell-us-about-your-company-left-section">
@@ -34,7 +44,7 @@ function Expenses() {
                             <img src="assets/images/rdexpensesicon.png" alt="redexpensesicon" />
                         </div>
                         <p>Insert your expense information manually to estimate your R&D claim. </p>
-                        <button className="btn btn-primary">Manually Input Data</button>
+                        <button className="btn btn-primary" onClick={claimPage}>Manually Input Data</button>
                     </div>
                 </div>
             </div>

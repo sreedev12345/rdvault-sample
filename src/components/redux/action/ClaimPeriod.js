@@ -1,5 +1,5 @@
-const claimPeriod = (data)=>dispatch=>{
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaa",data)
+const claimPeriod = (data,startdate,enddate)=>dispatch=>{
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaa",data,startdate)
     dispatch({
         status : 'PENDING',
         type : 'CLAIM_PERIOD_REQUEST'
@@ -8,7 +8,9 @@ const claimPeriod = (data)=>dispatch=>{
         dispatch({
             status  : 'SUCCESS',
             type : 'CLAIM_PERIOD_SUCCESS',
-            claimdata : data
+            claimdata : data,
+            startdate : startdate,
+            enddate : enddate
         })
     )
 }

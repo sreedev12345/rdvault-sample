@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+
 import Header from './Header';
 import CompanyDetails from './CompanyDetails'
 import Footer from './Footer'
 import ClaimPeriod from './ClaimPeriod';
 import Grant from './Grant';
 import Expenses from './Expenses';
-import Context from '../common/Context'
+
+
 
 
 const Main = (props) => {
-    const [value,setValue] = useState()
     return (
 
         <div>

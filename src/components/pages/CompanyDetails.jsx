@@ -1,30 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { useSelector,useDispatch } from "react-redux";
 import { companyAction } from '../../components/redux/action/CompanyAction';
-import { claimPeriod } from '../../components/redux/action/ClaimPeriod';
+import { keyword } from '../../components/redux/action/keyword'
 import Data from '../common/Data';
 
 
 const CompanyDetails = (props) => {
-    const inputEl = useRef(null);
     // const [value,setValue] = useState([])
     const dispatch = useDispatch();
-    const [search, setSearch] = useState("");
+    const indexone = useSelector(state=>state)
+    const [search, setSearch] = useState(indexone.KeywordReducer ? indexone.KeywordReducer.data ? indexone.KeywordReducer.data : "" : null);
     const [renderData, setRenderData] = useState([]);
     const dataPerPage = 5;
     const [currentPage, setCurrentPage] = useState(1)
     const [check, setCheck] = useState([]);
     let checkes = false
- 
 
 
 
 
-    useEffect(()=>{
-        window.scrollTo(0,0);
-    },[])
 
-  
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
+
 
 
     useEffect(() => {
@@ -34,6 +34,12 @@ const CompanyDetails = (props) => {
         )
         setRenderData(mapData)
     }, [search])
+
+    // useEffect(()=>{
+    //     dispatch(companyAction(true));
+    //     var elmnt = document.getElementById("claim-period");
+    //     elmnt.scrollIntoView({ behavior: "smooth" });
+    // },[checkes===true])
 
 
 
@@ -66,15 +72,20 @@ const CompanyDetails = (props) => {
 
 
     const handleClick = (e) => {   //onchange for checkbox
-     
+
 
         const filterdata = renderData.map((check, index) => {
+            console.log("dev-sree",e.target.value)
             if (check.company === e.target.name && check.checked === false) {
+                console.log(check.company)
                 check.checked = true;
-                dispatch(companyAction(true));
+                dispatch(companyAction(true,check.company));
+                dispatch(keyword(search))
+                var elmnt = document.getElementById("claim-period");
+                elmnt.scrollIntoView({ behavior: "smooth" });
                 return check
-            } else if(check.company === e.target.name && check.checked === true) {
-                dispatch(companyAction(false));
+            } else if (check.company === e.target.name && check.checked === true) {
+                dispatch(companyAction(false,check.company));
                 check.checked = false;
                 return check
             }
@@ -84,25 +95,14 @@ const CompanyDetails = (props) => {
             }
 
         })
-        var elmnt = document.getElementById("claim-period");
-        elmnt.scrollIntoView({behavior: "smooth"});
         setCheck(filterdata);
     }
 
 
 
+    check && check.map(data => data.checked === true ? checkes = true : false)
 
-    check && check.map((data, i) => { // logic for completed status
-     
-        if (data.checked === true) {
-            checkes = data.checked;
-         
-           
-            checkes = data.checked;
-        } 
-    })
-
-  
+console.log("indexone",indexone)
 
     return (
         <>
@@ -151,15 +151,16 @@ const CompanyDetails = (props) => {
                                         return (
                                             <div className="tell-us-about-your-company-maincard2 column-card-1 custom-m-top-20 col-md-6 col-xl-6 col-lg-6 col-sm-6 col-12" key={i}>
                                                 <div className="tell-us-about-your-company-card2-width">
-                                                    <div className="tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label">
+                                                    <div className= {val.checked === true ? "label-active tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label" : "tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label"}>
                                                         <div className="tell-us-about-your-company-card2-top">
                                                             <span>{val.company}</span>
                                                             <div className="cust-checkbox">
                                                                 <div className="custom-checkbox">
-                                                                    <input name={val.company} className="checkbox-custom" id={val._id} type="checkbox"
+                                                                    <input name={val.company} 
+                                                                        className="checkbox-custom" id={val._id} type="checkbox"
                                                                         onChange={handleClick}
-                                                                        checked={val.checked}
-                                                                       
+                                                                        checked={val.checked ? true : false}
+
                                                                     />
                                                                     <label className="checkbox-custom-label" for={val._id}></label>
                                                                 </div>

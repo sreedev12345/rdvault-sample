@@ -1,4 +1,4 @@
-const companyAction = (data)=>dispatch=>{
+const companyAction = (data,data1)=>dispatch=>{
     console.log("data",data)
    dispatch({
        status : 'PENDING',
@@ -9,6 +9,7 @@ const companyAction = (data)=>dispatch=>{
           status : 'SUCCESS',
           type : 'SUCESS_COMPANY_ACTION',
           data : data,
+          data1 : data1
       })  
    )
 }

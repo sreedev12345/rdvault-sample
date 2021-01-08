@@ -1,5 +1,160 @@
-@media (min-width:768px){
-
+@media screen and (min-width: 1400px) and (max-width: 1500px) { 
+    .subpage-header-section{
+        height: 530px;
+        background-size: 100%;
+    }
+}
+@media screen and (min-width: 1500px) and (max-width: 1600px) { 
+    .subpage-header-section{
+        height: 590px;
+        background-size: 100%;
+    }
+}
+@media screen and (min-width: 1500px) and (max-width: 1565px) { 
+.custom-datepicker .DayPicker{
+left: 10px;
+}
+}
+@media screen and (min-width: 1565px) and (max-width: 1700px) { 
+    .custom-datepicker .DayPicker{
+    left: 25px;
+    }
+    }
+@media screen and (min-width: 1600px) and (max-width: 1700px) { 
+    .subpage-header-section{
+        height: 590px;
+        background-size: 100%;
+    }
+    .tell-us-about-your-company-left-section h3{
+        width: 75%;
+    }
+}
+@media screen and (min-width:1500px) and (max-width:2100px){
+    .rdexpenses_card1_section p, .rdexpenses_card2_section p{
+        margin-bottom: 20px;
+        min-height: 100px;
+    }
+    .rdexpenses_card1_section, .rdexpenses_card2_section {
+        min-height: 400px;
+    }
+}
+@media screen and (min-width: 1700px) and (max-width: 1867px) { 
+    .subpage-header-section{
+        height: 660px;
+        background-size: 100%;
+    }
+    .custom-datepicker .DayPicker{
+        left: 88px;
+        width: 585px !important;
+        }
+    .tell-us-about-your-company-left-section h3{
+        width: 70%;
+    }
+}
+@media screen and (min-width: 1867px) and (max-width: 2100px) { 
+    .header-section{
+        height: 675px;
+        background-size: 100%;
+    }
+    .tell-us-about-your-company-left-section h3{
+         width: 75%;
+    }
+    .custom-datepicker .DayPicker{
+        left: 118px;
+        width: 585px !important;
+        }
+}
+@media screen and (min-width: 2100px) and (max-width: 2300px) { 
+    .header-section{
+        height: 840px;
+        background-size: 100%;
+    }
+    .tell-us-about-your-company-left-section h3{
+        width: 55%;
+    }
+    .custom-datepicker .DayPicker{
+        left: 138px;
+        width: 585px !important;
+        }
+        .tell-us-about-your-company-card-section-label .form-group {
+            margin-bottom: 3px;
+            width: 50%;
+        }
+}
+@media screen and (max-width: 2100px) and (min-width: 1867px){
+.header-section {
+    height: 750px;
+    background-size: 100%;
+}
+}
+@media screen and (min-width: 2300px) and (max-width: 2560px) { 
+    
+    .header-section{
+        height: 940px;
+        background-size: 100%;
+    }
+    .tell-us-about-your-company-left-section h3{
+        width: 50%;
+    }
+    .custom-datepicker .DayPicker{
+        left: 178px;
+        width: 585px !important;
+        }
+}
+@media screen and (min-width: 1280px) and (max-width: 1386px) { 
+    .header-section{
+        height: 540px;
+        background-size: 100%;
+    }
+}
+@media screen and (min-width: 992px) and (max-width: 1280px) { 
+    .header-section{
+        height: 580px;
+        background-size: 100% 100%;
+    }
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation:portrait) {
+    .subpage-header-section{
+        background-size: cover;
+        height: 390px;
+    }
+    .completed-text{bottom:25px;}
+    .logo-header-text {
+        font-size: 10.2pt;
+    }
+    .need-help span {
+        font-size: 6.25pt;
+        font-family: 'Poppins-ExtraBold';
+        padding: 2px 10px;
+        margin-right: 10px;
+    }
+    .header-phone-email-section ul li a > span {
+        font-size: 8.4pt;
+        font-family: 'Poppins-Light';
+        margin-left: 7px;
+        margin-right: 0;
+    }
+    .header-heading-section-content h1 {
+        font-size: 22.5pt;
+        color: #fff;
+        margin-top: 4px;
+    }
+    .tell-us-about-your-company-left-section {
+        width: 100%;
+        float: left;
+    }
+    .logo-header {
+        padding: 10px;
+    }
+    .tell-us-about-your-company-left-section h3{
+        float: left;
+        text-align: left;
+    }
+    hr.tell-us-about-your-company-line{
+        margin: 1rem 0;
+        max-width: initial;
+        width: 100%;
+    }
 }
 @media (max-width:991px){
     .datepickerbox .card{
@@ -16,4 +171,85 @@
 @media 
 only screen and (max-width: 760px) {
 
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) { 
+    
+        .logo-header {
+            padding: 28px 0 28px;
+        }
+        .logo-header-right-section{
+            align-items: center;
+        }
+        .logo-header-text{
+            font-size: 14.2pt;
+        }
+        .header-phone-email-section{text-align:center;}
+        .need-help button{width:100%;margin-top: 0px;}
+        .header-heading-section-content h1{font-size: 35.5pt;margin-top:15px;}
+         hr.tell-us-about-your-company-line{ margin: 0 0 0 0;}
+        .tell-us-about-your-company-left-section h3{float: left; text-align: left;margin-bottom: 20px;}
+        .footer-section{    background-size: 100% 100%;padding-top: 150px;}
+        .tell-us-about-your-company-section{margin:0px auto 30px 40px;}
+        img.color-logo{float:left;margin-top: 10px;}
+        .completed-text{bottom:25px;}
+}
+
+@media screen and (min-width: 767px) and (max-width: 991px) { 
+    .sticklyAdd .sticky{position: relative !important; top:unset !important;}
+    .rd_expenses_information_heading{width: 80%;}
+    .table-responsive{
+        overflow-x:auto !important;
+    }
+    table{white-space: nowrap;}
+    .subpage-header-section{
+        background-size: 100% 100%;
+        height: 560px;
+        width: 100%;
+    }
+    .completed-text{bottom:25px;}
+    .logo-header-left-section{
+        margin-bottom: 8px;
+        justify-content: center;
+    }
+    .logo-header-right-section {
+        text-align: center;
+        justify-content: center;
+    }
+    .logo-header-img {
+        width: 35% !important;
+    }
+    .logo-header-img{width:100%;}
+    .steps-header-center-section-content ul li a{font-size: 12.2pt;}
+    .steps-header-center-section-content ul li a > label{width:24px;height:24px;    font-size: 15px;}
+    .header-heading-section-content h1{    font-size: 30.5pt;    margin-top: 8px;    line-height: 49.11pt;}
+    .header-heading-section-content {
+        width: 100%;
+        margin: auto;
+    }
+    .logo-header{padding: 25px 0 25px;}
+    hr.tell-us-about-your-company-line{ margin: 0 0 0 0;}
+    .tell-us-about-your-company-left-section h3{float: left; text-align: left;margin-bottom: 20px;}
+    img.color-logo{
+        float: left;
+    margin-bottom: 15px;
+    }
+    .tell-us-about-your-company-section{    margin: 0px auto 0;}
+    .footer-section{    background-size: 100% 100%;padding-top: 150px;}
+    .footer-section ul li a,.step3_bg_footer-section ul li a{font-size: 12.5pt;}
+    .your-rd-claim-section-btn{margin-top:15px;}
+}
+@media screen and (min-width: 320px) and (max-width:767px){
+    .mobileContent{
+        width:100%;
+    }
+    .mobileinfo p {
+        font-size: 18pt;
+        font-family: "Poppins-SemiBold";
+        line-height: 32px;
+        color: #ffffff;
+    }
+    .mobileinfo{
+        padding: 10px;
+    }
 }

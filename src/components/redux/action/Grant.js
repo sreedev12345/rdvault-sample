@@ -1,4 +1,5 @@
-const grant = (data)=>dispatch=>{
+const grant = (yes,data)=>dispatch=>{
+    console.log("yexs",yes,data)
     dispatch({
         status : 'PENDING',
         type : 'GRANT_PENDING'
@@ -7,7 +8,8 @@ const grant = (data)=>dispatch=>{
         dispatch({
             status : 'SUCCESS',
             type : 'GRANT_SUCCESS',
-            data : data
+            data : data,
+            yes:yes
         })
     )
 }

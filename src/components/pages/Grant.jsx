@@ -12,17 +12,26 @@ function Grant() {
 
     useEffect(()=>{
         console.log("sreedev",grantyes,grantno)
-        if(grantyes === true || grantno===true) {
+        if(grantno===true) {
             const elmnt = document.getElementById("expense");
             elmnt.scrollIntoView({behavior: "smooth"});
         }
-    },[grantyes === true || grantno===true ])
+    },[grantno]);
+
+
+    useEffect(()=>{
+        console.log("sreedev",grantyes,grantno)
+        if(grantyes === true) {
+            const elmnt = document.getElementById("expense");
+            elmnt.scrollIntoView({behavior: "smooth"});
+        }
+    },[grantyes])
 
 
     const handleNo = () => {
         setGrantNo(!grantno);
         setGrantYes(false);
-        dispatch(grant(!grantno));
+        dispatch(grant(false,!grantno));
         // console.log("grantno",!grantno)
         // const elmnt = document.getElementById("expense");
         // elmnt.scrollIntoView();
@@ -31,7 +40,7 @@ function Grant() {
     const handleYes = () => {
         setGrantNo(false);
         setGrantYes(!grantyes)
-        dispatch(grant(!grantyes))
+        dispatch(grant(!grantyes,false))
         // const elmnt = document.getElementById("expense");
         // elmnt.scrollIntoView();
     }
@@ -61,7 +70,10 @@ function Grant() {
                         <div className="tell-us-about-your-company-card2">
                             <div className="tell-us-about-your-company-maincard2 column-card-1 custom-m-top-20">
                                 <div className="tell-us-about-your-company-card2-width">
-                                    <div className="tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label">
+                                    <div className={ grantno ===true && companyclaim.claimReducer.claimdata === true  && 
+                                                            companyclaim.companyReducer.data === true ||   companyclaim.grantPeriod.data === true? 
+                                                            "tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label label-active"
+                                                        : "tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label" }>
                                         <div className="tell-us-about-your-company-card2-top">
                                             <span>NO</span>
                                             <div className="cust-checkbox">
@@ -71,7 +83,8 @@ function Grant() {
                                                         id="noti_8" value="3"
                                                         type="checkbox"
                                                         checked={
-                                                            grantno ===true && companyclaim.claimReducer.claimdata === true  && 
+                                                            companyclaim.grantPeriod.data === true ? true :
+                                                           grantno ===true && companyclaim.claimReducer.claimdata === true  && 
                                                             companyclaim.companyReducer.data === true ? grantno : false}
                                                         onChange={handleNo
                                                         }
@@ -83,7 +96,11 @@ function Grant() {
                                     </div>
                                 </div>
                                 <div className="tell-us-about-your-company-card2-width">
-                                    <div className="tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label">
+                                    <div className={ grantyes ===true && 
+                                    companyclaim.claimReducer.claimdata === true  && 
+                                                            companyclaim.companyReducer.data === true ||  companyclaim.grantPeriod.yes === true ? 
+                                                            "tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label label-active" :
+                                                             "tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label"}>
                                         <div className="tell-us-about-your-company-card2-top">
                                             <span>Yes</span>
                                             <div className="cust-checkbox">
@@ -93,7 +110,9 @@ function Grant() {
                                                         className="checkbox-custom"
                                                         id="noti_9" value="3"
                                                         type="checkbox"
-                                                        checked={ grantyes ===true && companyclaim.claimReducer.claimdata === true  && 
+                                                        checked={ 
+                                                            companyclaim.grantPeriod.yes === true ? true :
+                                                            grantyes ===true && companyclaim.claimReducer.claimdata === true  && 
                                                             companyclaim.companyReducer.data === true ? grantyes : false}
                                                         onChange={handleYes}
                                                     />

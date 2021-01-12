@@ -18,12 +18,12 @@ const Main = (props) => {
             <section className="tell-us-about-your-company">
                 <div className="container-fluid">
                     <div className="tell-us-about-your-company-section">
-                   
-                            <CompanyDetails/>
-                            <ClaimPeriod />
-                            <Grant />
-                            <Expenses />
-                       
+
+                        <CompanyDetails />
+                        <ClaimPeriod />
+                        <Grant />
+                        <Expenses />
+
                     </div>
                 </div>
             </section>

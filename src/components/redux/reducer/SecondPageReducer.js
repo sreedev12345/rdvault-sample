@@ -1,10 +1,10 @@
-const secondPageReducer = (state={},action)=>{
+const secondPageReducer = (state=[],action)=>{
     console.log("grant-period",action,action.type)
     if(action.type === 'SUCCESS') {
-        return Object.assign({},state,{
+        return {
             status : action.status,
-            data : action.secondpage,
-        })
+            ...state,data : action.secondpage,
+        }
     } else {
         return state;
     }

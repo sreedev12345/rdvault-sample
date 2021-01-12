@@ -11,7 +11,6 @@ function Grant() {
 
 
     useEffect(()=>{
-        console.log("sreedev",grantyes,grantno)
         if(grantno===true) {
             const elmnt = document.getElementById("expense");
             elmnt.scrollIntoView({behavior: "smooth"});
@@ -20,7 +19,6 @@ function Grant() {
 
 
     useEffect(()=>{
-        console.log("sreedev",grantyes,grantno)
         if(grantyes === true) {
             const elmnt = document.getElementById("expense");
             elmnt.scrollIntoView({behavior: "smooth"});
@@ -32,21 +30,13 @@ function Grant() {
         setGrantNo(!grantno);
         setGrantYes(false);
         dispatch(grant(false,!grantno));
-        // console.log("grantno",!grantno)
-        // const elmnt = document.getElementById("expense");
-        // elmnt.scrollIntoView();
     }
 
     const handleYes = () => {
         setGrantNo(false);
         setGrantYes(!grantyes)
         dispatch(grant(!grantyes,false))
-        // const elmnt = document.getElementById("expense");
-        // elmnt.scrollIntoView();
     }
-
-
-    console.log("companyclaimcompanyclaim",companyclaim)
 
     return (
         <div id="expensess" className={companyclaim.claimReducer.claimdata === true  && 

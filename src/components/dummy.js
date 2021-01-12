@@ -37,21 +37,17 @@ const YourRDClaimAndEstimate = () => {
   const [profitbtn, setProfitbtn] = useState(false);
   const [lossbtn, setLossBtn] = useState(false);
   let [text, setText] = useState("");
+  const [accountname, setAccountName] = useState("");
+  const [amountvalue, setAmountValue] = useState("");
   const [volume, setVolume] = useState(0);
   const [volume1, setVolume1] = useState(0);
-  const [selectedOption, setselectedOption] = useState(null);
-  const [data, setdata] = useState({
-    accountname: "",
-    amountvalue: "",
-  })
-  const [renderdata, setRenderData] = useState([]);
-  let total = 0;
+  const [selectedOption,setselectedOption] = useState(null);
+  const secondpageresponse = useSelector(state=>state)
 
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [])
-
 
   useEffect(() => {
     if (!companyresponse.companyReducer.data) {
@@ -60,11 +56,15 @@ const YourRDClaimAndEstimate = () => {
   }, [!companyresponse.companyReducer.data]);
 
   const editCompany = () => {
+    console.log("inside", companyresponse)
+    companyresponse.claimReducer.claimdata = true
     history.push('/')
-    dispatch(claimPeriod(true, companyresponse.claimReducer.startdate, companyresponse.claimReducer.enddate))
+    dispatch(claimPeriod(companyresponse.claimReducer.claimdata, companyresponse.claimReducer.startdate, companyresponse.claimReducer.enddate))
   }
 
-
+  const accountChange = (e) => {
+    setAccountName(e.target.value)
+  }
 
   const focusTextInput = (e) => {
     e.preventDefault()
@@ -121,7 +121,9 @@ const YourRDClaimAndEstimate = () => {
     }
   }
 
-
+  const amountChange = (e) => {
+    setAmountValue(e.target.value)
+  }
 
   const accountButton = (e) => {
     e.preventDefault();
@@ -141,52 +143,25 @@ const YourRDClaimAndEstimate = () => {
     e.preventDefault();
   }
 
-  const optionChange = (selectedOption) => {
+  const optionChange = (selectedOption)=>{
     setselectedOption(selectedOption)
   }
 
-  const handleComplete = () => {
+  const handleComplete = ()=>{
+    console.log("event completed")
     const obj = {
-      volume: volume,
-      volume1: volume1,
-      accountname: data.accountname,
-      amountvalue: data.amountvalue,
-      selectedOption: selectedOption ? selectedOption : null
+      volume : volume,
+      volume1 : volume1,
+      accountname : accountname,
+      amountvalue : amountvalue,
+      selectedOption : selectedOption.value
     }
-    setRenderData((datas) => {
-      return [...datas, obj]
-    })
-
-    setdata({ accountname: "", amountvalue: "" });
-    setselectedOption(null)
-    setVolume(0)
-    setVolume1(0)
-
+    dispatch(secondPageAction(obj));
+    console.log("obj",obj)
   }
 
 
-  const handleDelete = (e, val, i) => {
-    e.preventDefault();
-    console.log(val, i)
-    renderdata.splice(i, 1);
-    return setRenderData(renderdata.filter(data => data))
-  }
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setdata(datas => ({ ...data, [name]: value }))
-  }
-
-
-  for (var i = 0; i < renderdata.length; i++) {
-    total += parseInt(renderdata[i].amountvalue)
-  }
-
-
-  console.log("total", total)
-
-
-
+  console.log("secondpageresponse", secondpageresponse)
   return (
     <>
       <Header />
@@ -693,138 +668,57 @@ const YourRDClaimAndEstimate = () => {
                       <span className="custom-range-slider-percentage-text">33%</span>
                     </td> */}
                   </tr>
-                  {/* <tr className="row-fade"> */}
-                  {/* <td style={{ width: '5%' }}></td> */}
-                  {/* <td>
+                  <tr className="row-fade">
+                    <td style={{ width: '5%' }}></td>
+                    {/* <td>
                       <p>AC04</p>
                     </td> */}
-                  {/* <td>
+                    <td>
                       <a className="close-icon" href="#">
                         <img src="assets/images/close-btn.png" alt="close" />
                         <span>Cleaning</span>
                       </a>
-                    </td> */}
-                  {/* <td>
+                    </td>
+                    <td>
                       <div className="rupee-editable-btn">
                         <input type="text" value="£20,000" />
                         <a className="" href="#">
                           <img src="assets/images/edit-pencil-icon.png" alt="pencil-icon" />
                         </a>
-                      </div> */}
-                  {/* <a className="rupee-edit-btn" href="#">
+                      </div>
+                      {/* <a className="rupee-edit-btn" href="#">
                         <span>£20,000</span>
                         <img src="images/edit-pencil-icon.png" />
                       </a> */}
-                  {/* </td> */}
-                  {/* <td style={{ width: '22%' }}>
+                    </td>
+                    <td style={{ width: '22%' }}>
                       <Select className="custom-select-box" options={options} />{' '}
-                    </td> */}
-                  {/* <td>
-                      <label className="custom-range-slider-price">£59,400</label>
-                      <Slider className="custom-range-slider" orientation="horizontal" />{' '}
-                      <span className="custom-range-slider-percentage-text">33%</span>
-                    </td> */}
-                  {/* <td>
+                    </td>
+                    <td>
                       <label className="custom-range-slider-price">£59,400</label>
                       <Slider className="custom-range-slider" orientation="horizontal" />{' '}
                       <span className="custom-range-slider-percentage-text">33%</span>
                     </td>
-                  </tr> */}
-                  {/* <tr>
-                    <td style={{ width: '5%' }}></td> */}
-                  {/* <td>
+                    <td>
+                      <label className="custom-range-slider-price">£59,400</label>
+                      <Slider className="custom-range-slider" orientation="horizontal" />{' '}
+                      <span className="custom-range-slider-percentage-text">33%</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style={{ width: '5%' }}></td>
+                    {/* <td>
                       <p>AC04</p>
                     </td> */}
-                  {/* <td>
+                    <td>
                       <a className="close-icon" href="#">
                         <img src="assets/images/close-btn.png" />
                         <span>Cleaning</span>
                       </a>
-                    </td> */}
-                  {/* <td>
+                    </td>
+                    <td>
                       <div className="rupee-editable-btn">
                         <input type="text" value="£20,000" />
-                        <a className="" href="#">
-                          <img src="assets/images/edit-pencil-icon.png" />
-                        </a>
-                      </div> */}
-                  {/* <a className="rupee-edit-btn" href="#">
-                        <span>£20,000</span>
-                        <img src="images/edit-pencil-icon.png" />
-                      </a> */}
-                  {/* </td> */}
-                  {/* <td style={{ width: '22%' }}>
-                      <Select className="custom-select-box" options={options} />{' '}
-                    </td> */}
-                  {/* <td>
-                      <label className="custom-range-slider-price">£59,400</label>
-                      <Slider className="custom-range-slider" orientation="horizontal" />{' '}
-                      <span className="custom-range-slider-percentage-text">33%</span>
-                    </td> */}
-                  {/* <td>
-                      <label className="custom-range-slider-price">£59,400</label>
-                      <Slider className="custom-range-slider" orientation="horizontal" />{' '}
-                      <span className="custom-range-slider-percentage-text">33%</span>
-                    </td>
-                  </tr> */}
-
-                  {
-                    renderdata.length >= 1 ? renderdata.map((val, i) => {
-                      return (
-                        <tr className="row-active" value={i}>
-                          <td style={{ width: '5%' }}></td>
-                          <td>
-                            <a className="close-icon" href="#">
-                              <img src="assets/images/close-btn.png" alt="close-btn" onClick={(e) => handleDelete(e, val, i)} />
-                              <span>{val ? val.accountname : null}</span>
-                            </a>
-                          </td>
-                          <td>
-                            <div className="rupee-editable-btn">
-                              <input type="text" value={val ? val.amountvalue : null} />
-                              <a className="" href="#">
-                                <img src="assets/images/edit-pencil-icon.png" alt="pencil-icon" />
-                              </a>
-                            </div>
-                            {/* <a className="rupee-edit-btn" href="#">
-                        <span>£20,000</span>
-                        <img src="images/edit-pencil-icon.png" />
-                      </a> */}
-                          </td>
-                          <td style={{ width: '22%' }}>
-                            <Select className="custom-select-box"
-                              value={val ? val.selectedOption : null}
-
-                            />{' '}
-                          </td>
-                          <td>
-                            <label className="custom-range-slider-price">£{val ? val.amountvalue : 0}</label>
-                            <Slider className="custom-range-slider" value={val ? val.volume : null} orientation="horizontal" />{' '}
-                            <span className="custom-range-slider-percentage-text">{val.volume}%</span>
-                          </td>
-                          <td>
-                            <label className="custom-range-slider-price">£{val ? val.amountvalue : 0}</label>
-                            <Slider className="custom-range-slider" value={val ? val.volume1 : null} orientation="horizontal" />{' '}
-                            <span className="custom-range-slider-percentage-text">{val.volume1}%</span>
-                          </td>
-                        </tr>
-                      )
-                    }) : null
-                  }
-                  {/* </tr> */}
-                  <tr>
-                    <td style={{ width: '5%' }}></td>
-                    <td>
-                      <a className="close-icon" href="#">
-                        <img src="assets/images/add-icon.png" alt="close" onClick={accountButton} />
-                        <span><input type="text" name="accountname"
-                          ref={accountvalue} onClick={e => e.preventDefault()} value={data.accountname} onChange={handleChange} /></span>
-                      </a>
-                    </td>
-                    <td>
-                      <div className="rupee-editable-btn">
-                        <input type="text" name="amountvalue" onClick={e => e.preventDefault()}
-                          onKeyPress={keyPress} value={data.amountvalue} onChange={handleChange} />
                         <a className="" href="#">
                           <img src="assets/images/edit-pencil-icon.png" />
                         </a>
@@ -835,19 +729,86 @@ const YourRDClaimAndEstimate = () => {
                       </a> */}
                     </td>
                     <td style={{ width: '22%' }}>
-                      <Select
-                        className="custom-select-box"
-                        name="selector"
-                        options={options}
+                      <Select className="custom-select-box" options={options} />{' '}
+                    </td>
+                    <td>
+                      <label className="custom-range-slider-price">£59,400</label>
+                      <Slider className="custom-range-slider" orientation="horizontal" />{' '}
+                      <span className="custom-range-slider-percentage-text">33%</span>
+                    </td>
+                    <td>
+                      <label className="custom-range-slider-price">£59,400</label>
+                      <Slider className="custom-range-slider" orientation="horizontal" />{' '}
+                      <span className="custom-range-slider-percentage-text">33%</span>
+                    </td>
+                  </tr>
+                  <tr className="row-fade">
+                    <td style={{ width: '5%' }}></td>
+                        <td>
+                      <a className="close-icon" href="#">
+                        <img src="assets/images/close-btn.png" />
+                    <span>{secondpageresponse ? secondpageresponse.secondPageReducer.data.accountname : null}</span>
+                      </a>
+                    </td>
+                    <td>
+                      <div className="rupee-editable-btn">
+                        <input type="text" value={secondpageresponse ? secondpageresponse.secondPageReducer.data.amountvalue : null} />
+                        <a className="" href="#">
+                          <img src="assets/images/edit-pencil-icon.png" />
+                        </a>
+                      </div>
+                      {/* <a className="rupee-edit-btn" href="#">
+                        <span>£20,000</span>
+                        <img src="images/edit-pencil-icon.png" />
+                      </a> */}
+                    </td>
+                    <td style={{ width: '22%' }}>
+                      <Select className="custom-select-box" options={options} />{' '}
+                    </td>
+                    <td>
+                      <label className="custom-range-slider-price">£59,400</label>
+                      <Slider className="custom-range-slider"  value={secondpageresponse ? secondpageresponse.secondPageReducer.data.volume : null} orientation="horizontal" />{' '}
+                      <span className="custom-range-slider-percentage-text">33%</span>
+                    </td>
+                    <td>
+                      <label className="custom-range-slider-price">£59,400</label>
+                      <Slider className="custom-range-slider"  value={secondpageresponse ? secondpageresponse.secondPageReducer.data.volume1 : null} orientation="horizontal" />{' '}
+                      <span className="custom-range-slider-percentage-text">33%</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style={{ width: '5%' }}></td>
+                    <td>
+                      <a className="close-icon" href="#">
+                        <img src="assets/images/add-icon.png" alt="close" onClick={accountButton} />
+                        <span><input type="text" ref={accountvalue} onClick={e => e.preventDefault()} value={accountname} onChange={accountChange} /></span>
+                      </a>
+                    </td>
+                    <td>
+                      <div className="rupee-editable-btn">
+                        <input type="text" onClick={e => e.preventDefault()} 
+                        onKeyPress={keyPress} value={amountvalue} onChange={amountChange} />
+                        <a className="" href="#">
+                          <img src="assets/images/edit-pencil-icon.png" />
+                        </a>
+                      </div>
+                      {/* <a className="rupee-edit-btn" href="#">
+                        <span>£20,000</span>
+                        <img src="images/edit-pencil-icon.png" />
+                      </a> */}
+                    </td>
+                    <td style={{ width: '22%' }}>
+                      <Select 
+                        className="custom-select-box" 
+                        options={options} 
                         onChange={optionChange}
-                      // value={selectedOption.optionChange ? selectedOption.optionChange : ""}
+                        // value={selectedOption.optionChange ? selectedOption.optionChange : ""}
                       />{' '}
                     </td>
                     <td>
                       <label className="custom-range-slider-price">£59,400</label>
                       <Slider
                         className="custom-range-slider"
-                        name="slider1"
                         value={volume}
                         orientation="horizontal"
                         onChange={handleSlider} />{' '}
@@ -857,7 +818,6 @@ const YourRDClaimAndEstimate = () => {
                       <label className="custom-range-slider-price">£59,400</label>
                       <Slider
                         className="custom-range-slider"
-                        name="slider2"
                         value={volume1}
                         onChange={handleSlider1}
                         onChangeComplete={handleComplete}
@@ -875,7 +835,7 @@ const YourRDClaimAndEstimate = () => {
                     </td>
                     <td>
                       <a className="total-cost-sales rupee-edit-btn">
-                        <span>£{total}</span>
+                        <span>£8,350</span>
                       </a>
                     </td>
                     <td style={{ width: '22%' }}></td>

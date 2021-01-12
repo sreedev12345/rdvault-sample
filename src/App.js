@@ -6,61 +6,52 @@ import Store from '../src/components/redux/store/Store';
 import Form from './Form'
 import YourRDClaimAndEstimate from '../src/components/secondpage/YourRDClaimAndEstimate';
 
+
+import Select from 'react-select';
+
 import {
   BrowserRouter as Router,
-  Switch,
   Route,
-  Link
 } from "react-router-dom";
 
+
+
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
+];
+
+
 function App() {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(null);
+  const [fruits,setFruits] = useState("")
 
-  // useEffect(()=>{
-  //   console.log("initial",document.getElementById("date").value)
-  // },[])
+  const handleChange = selectedOption => {
+    setInput( selectedOption );
+    console.log(`Option selected:`, selectedOption);
+    setFruits(selectedOption)
+  };
 
-  // useEffect(()=>{
-  //   console.log("initial-input",document.getElementById("date").value)
-  // },[input]);
-
-
-  const checkValue = (str, max) => {
-    console.log(str, max)
-  }
-
-  const dateChange = (e) => {
-    console.log("trigger")
-    var element = e.target.value;
-    if (/\D\/$/.test(element)) element = element.substr(0, element.length - 3);
-    var values = element.split('/').map(function (v) {
-      return v.replace(/\D/g, '')
-    });
-    console.log("value", values, e.target.value);
-    // checkValue(values[0],31)
-    var output = values.map(function (v, i) {
-      return v.length == 2 && i < 2 ? v + ' / ' : v;
-    });
-    console.log("out-put", output.join('').substr(0, 14));
-    setInput(e.target.value.replace(/^(\d\d)(\d)$/g, '$1/$2').replace(/^(\d\d\/\d\d)(\d+)$/g, '$1/$2').replace(/[^\d\/]/g, ''))
-  }
+  console.log("fruits-fruits",fruits)
 
   return (
     <Router>
       <div className="App">
-        {/* {/* <input name=x size=10 maxlength=10  
-      onkeyup="this.value=this.value.replace(/^(\d\d)(\d)$/g,'$1/$2').replace(/^(\d\d\/\d\d)(\d+)$/g,'$1/$2').replace(/[^\d\/]/g,'')"> */}
-        {/* <input type="text" id="date" value={input} 
-       onChange={dateChange} */}
-        {/* //onkeyup={"this.value=this.value.replace(/^(\d\d)(\d)$/g,'$1/$2').replace(/^(\d\d\/\d\d)(\d+)$/g,'$1/$2').replace(/[^\d\/]/g,'')" } */}
-        {/* /> */} 
         <Provider store={Store}>
           <Route exact path="/" component={Main} />
           <Route path="/secondpage" component={YourRDClaimAndEstimate}/>
         </Provider>
-        {/* <YourRDClaimAndEstimate /> */}
       </div>
     </Router>
+    // <div>
+    //    <Select
+    //     value={fruits}
+    //     onChange={handleChange}
+    //     options={options}
+    //   />
+    // </div>
   );
 }
 

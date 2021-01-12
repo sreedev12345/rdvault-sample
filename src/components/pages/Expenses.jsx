@@ -12,7 +12,6 @@ function Expenses() {
         history.push('/secondpage')
     }
 
-    console.log("state-state",companyresponse)
     return (
         <div id="expense" 
             className={ companyresponse.grantPeriod.data ===true  || companyresponse.grantPeriod.yes  === true && 

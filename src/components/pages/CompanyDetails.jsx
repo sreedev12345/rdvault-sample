@@ -35,13 +35,6 @@ const CompanyDetails = (props) => {
         setRenderData(mapData)
     }, [search])
 
-    // useEffect(()=>{
-    //     dispatch(companyAction(true));
-    //     var elmnt = document.getElementById("claim-period");
-    //     elmnt.scrollIntoView({ behavior: "smooth" });
-    // },[checkes===true])
-
-
 
     const handleChange = (e) => { //search onchange 
         setSearch(e.target.value);
@@ -75,9 +68,7 @@ const CompanyDetails = (props) => {
 
 
         const filterdata = renderData.map((check, index) => {
-            console.log("dev-sree",e.target.value)
             if (check.company === e.target.name && check.checked === false) {
-                console.log(check.company)
                 check.checked = true;
                 dispatch(companyAction(true,check.company));
                 dispatch(keyword(search))
@@ -101,8 +92,6 @@ const CompanyDetails = (props) => {
 
 
     check && check.map(data => data.checked === true ? checkes = true : false)
-
-console.log("indexone",indexone)
 
     return (
         <>

@@ -158,9 +158,10 @@ function ClaimPeriod() {
         const { name, value } = e.target;
         if (name === START_DATE) {
             if (formState.startDate && isDateIsValid(value)) {
-                setInputDateError(false)
+                setDateError(false)
                 setdateRange((prevState) => ({ ...prevState, startDate: moment(value, 'DD/MM/YYYY') }));
             } else if (name === START_DATE && !isDateIsValid(value)) {
+                setDateError(true)
                 setdateRange((prevState) => ({ ...prevState, startDate: '' }));
             }
         } if (name === END_DATE) {
@@ -301,7 +302,7 @@ function ClaimPeriod() {
                                                 onChange={handleStartDate}
                                             />
 
-                                            <span className="text-danger">{inputDateError === true ? "Start Date is not valid" : ""}</span>
+                                            <span className="text-danger">{dateError === true ? "Start Date is not valid" : ""}</span>
 
                                         </div>
                                     </div>

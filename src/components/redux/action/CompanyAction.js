@@ -1,5 +1,4 @@
 const companyAction = (data,data1)=>dispatch=>{
-    console.log("data",data)
    dispatch({
        status : 'PENDING',
        type : 'REQUEST_COMPANY_ACTION'

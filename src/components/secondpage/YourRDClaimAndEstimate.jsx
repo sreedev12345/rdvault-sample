@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { claimPeriod } from '../../components/redux/action/ClaimPeriod';
 import { useSelector, useDispatch } from 'react-redux';
 import { secondPageAction } from '../../components/redux/action/SecondPageAction'
+import { prevPage } from '../../components/redux/action/PrevPage'
 import { useHistory } from "react-router-dom";
 import Header from '../pages/Header'
 import Footer from '../pages/Footer'
@@ -65,6 +66,13 @@ const YourRDClaimAndEstimate = () => {
   }
 
 
+  const handleEdit = ()=>{
+    dispatch(prevPage("claimperiod"))
+    dispatch(claimPeriod(true, companyresponse.claimReducer.startdate, companyresponse.claimReducer.enddate));
+    history.push('/')
+  }
+
+
 
   const focusTextInput = (e) => {
     e.preventDefault()
@@ -114,7 +122,6 @@ const YourRDClaimAndEstimate = () => {
   };
 
   const keyPress = (e) => {
-    console.log(e.charCode)
     if (e.charCode < 48 || e.charCode > 57) {
       e.preventDefault();
       return false;
@@ -167,7 +174,6 @@ const YourRDClaimAndEstimate = () => {
 
   const handleDelete = (e, val, i) => {
     e.preventDefault();
-    console.log(val, i)
     renderdata.splice(i, 1);
     return setRenderData(renderdata.filter(data => data))
   }
@@ -183,7 +189,6 @@ const YourRDClaimAndEstimate = () => {
   }
 
 
-  console.log("total", total)
 
 
 
@@ -232,7 +237,7 @@ const YourRDClaimAndEstimate = () => {
                             //  ele.enddate.getDate() + " " + months[ele.enddate.getMonth()] + " " + ele.enddate.getFullYear()
                           }
                         </p>
-                        <a className="edit_name_btn" href="#">
+                        <a className="edit_name_btn" href="#" onClick={handleEdit}>
                           EDIT PERIOD
                         </a>
                       </div>

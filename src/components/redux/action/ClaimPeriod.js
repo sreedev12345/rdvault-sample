@@ -1,5 +1,4 @@
 const claimPeriod = (data,startdate,enddate)=>dispatch=>{
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaa",data,startdate)
     dispatch({
         status : 'PENDING',
         type : 'CLAIM_PERIOD_REQUEST'

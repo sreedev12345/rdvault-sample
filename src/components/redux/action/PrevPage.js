@@ -1,15 +1,15 @@
-const keyword = (data)=>dispatch=>{
+const prevPage = (data)=>dispatch=>{
     dispatch({
         status : 'PENDING',
-        type : 'KEYWORD_PENDING'
+        type : 'PREVIOUS_PAGE_PENDING'
     })
     return(
         dispatch({
             status : 'SUCCESS',
-            type : 'KEYWORD_SUCCESS',
+            type : 'PREVIOUS_PAGE_SUCCESS',
             data : data
         })
     )
 }
 
-export { keyword }
+export { prevPage }

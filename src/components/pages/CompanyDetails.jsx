@@ -17,12 +17,21 @@ const CompanyDetails = (props) => {
     let checkes = false
 
 
+    console.log("index-one",indexone)
 
 
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [])
+ 
+
+    useEffect(()=>{
+        // window.scrollTo(0, 800);
+        if(indexone.prevPageReducer.data === 'claimperiod') {
+            console.log("inside-useeffect",indexone.prevPageReducer.data)
+            console.log("indexone---------indexone",indexone)
+              var elmnt = document.getElementById("rdClaim");
+              elmnt.scrollIntoView({ behavior: "smooth" });
+        }
+    },[indexone]);
 
 
 

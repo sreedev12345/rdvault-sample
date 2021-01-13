@@ -1,5 +1,4 @@
 const secondPageReducer = (state=[],action)=>{
-    console.log("grant-period",action,action.type)
     if(action.type === 'SUCCESS') {
         return {
             status : action.status,

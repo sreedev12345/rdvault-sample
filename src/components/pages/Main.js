@@ -1,4 +1,6 @@
 
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import Header from './Header';
 import CompanyDetails from './CompanyDetails'
 import Footer from './Footer'
@@ -9,7 +11,11 @@ import Expenses from './Expenses';
 
 
 
+
+
 const Main = (props) => {
+   
+
     return (
 
         <div>

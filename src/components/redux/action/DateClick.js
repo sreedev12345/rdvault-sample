@@ -1,5 +1,4 @@
 const dateClick = (data)=>dispatch=>{
-    console.log("dispatch",data)
     dispatch({
         status : "PENDING",
         type : "WAITING"

@@ -6,7 +6,8 @@ import claimReducer from "./ClaimReducer";
 import grantPeriod from './GrantPeriod';
 import KeywordReducer from './KeywordReducer';
 import secondPageReducer from './SecondPageReducer';
-import dateClickReducer from './DateClickReducer'
+import dateClickReducer from './DateClickReducer';
+import prevPageReducer from './PrevPageReducer'
 
 
 const rootreducer = combineReducers({
@@ -15,7 +16,8 @@ const rootreducer = combineReducers({
     grantPeriod : grantPeriod,
     KeywordReducer : KeywordReducer,
     secondPageReducer : secondPageReducer,
-    dateClickReducer : dateClickReducer
+    dateClickReducer : dateClickReducer,
+    prevPageReducer : prevPageReducer
 })
 
 

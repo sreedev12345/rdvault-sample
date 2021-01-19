@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Dates from '../common/Dates';
 import { useSelector, useDispatch } from 'react-redux';
-import { dateClick } from '../../components/redux/action/DateClick'
+import { dateClick } from '../../components/redux/Date'
 import moment from "moment";
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DayPickerRangeController } from 'react-dates';
 import './picker.css'
-import { claimPeriod } from '../../components/redux/action/ClaimPeriod';
-import { companyAction } from '../../components/redux/action/CompanyAction'
+import { claimPeriod } from '../../components/redux/ClaimPeriod';
+import { companyAction } from '../../components/redux/CompanyDetails'
 
 
 
@@ -28,7 +28,6 @@ function ClaimPeriod() {
     const [dateState, setDateState] = useState(false)
     const [comple, setcomple] = useState(false)
     const [complete, setComplete] = useState(false)
-    const [inputDateError, setInputDateError] = useState(false)
     const [dateErrorEnd, setDateErrorEnd] = useState(false)
     const [dateError, setDateError] = useState(false)
     const [dateRange, setdateRange] = useState({
@@ -43,54 +42,44 @@ function ClaimPeriod() {
 
     const [dataclick, setDataClick] = useState(false)
 
-    const [afterbackdate, setAfterbackDate] = useState({
-        startdate: '',
-        enddate: ''
-    })
+  
 
-    const [dateoutrange, setdateOutrange] = useState(0)
+    const [dateoutrange, setdateOutrange] = useState(0);
+
+    const [dateset,setdate] = useState(false);
+
 
 
 
     const { startDate, endDate } = dateRange;
 
+    console.log("afterbackafterback",afterback)
+
     useEffect(()=>{
         setCheckData(Dates)
     },[])
 
+  
+
+
+   
 
     useEffect(() => {
-        if (dataclick === false && afterback.claimReducer.startdate && afterback.claimReducer.enddate) {
-            formState.startDate = afterback.claimReducer.startdate ? moment(afterback.claimReducer.startdate).format("DD/MM/YYYY") : '';
-            formState.endDate = afterback.claimReducer.enddate ? moment(afterback.claimReducer.enddate).format("DD/MM/YYYY") : '';
-            setFormState(formState);
-            setdateRange((prevState) => ({ ...prevState, startDate: moment(afterback.claimReducer.startdate, 'DD/MM/YYYY'), endDate: moment(afterback.claimReducer.enddate, 'DD/MM/YYYY') }));
-            //setrenderdate((prevState)=>({...prevState,startDate:moment(to).format("DD/MM/YYYY"),endDate:moment(from).format("DD/MM/YYYY")}))
-        }
-
-    }, [afterback])
-
-    const isDateIsValid = (dateString) => moment(dateString, 'DD/MM/YYYY', true).isValid();
-
-
-    useEffect(() => {
-        const startfirst = dateRange && dateRange.startDate && dateRange.startDate._d;
-        const lastdate = dateRange && dateRange.endDate && dateRange.endDate._d;
-        if (lastdate !== null && startfirst !== null && formState.startDate.length === 10 && formState.endDate.length === 10) {
-            var Difference_In_Time = lastdate.getTime() - startfirst.getTime();
-            var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-            setdateOutrange(Difference_In_Days)
-            if (Difference_In_Days >= 0) {
-                var elmnt = document.getElementById("expensess");
-                elmnt.scrollIntoView(
-                    { behavior: 'smooth' }
-                );
-                dispatch(claimPeriod(true, dateRange.startDate._d, dateRange.endDate._d))
+        console.log("ssrrrrrr",afterback.claimReducer)
+         setdate(true)
+            if (afterback.dateClickReducer.data === false && afterback.claimReducer && afterback.claimReducer.claimdata === true && afterback.claimReducer.startdate && afterback.claimReducer.enddate) {
+                console.log("ss",afterback.claimReducer)
+                formState.startDate = afterback.claimReducer.startdate ? moment(afterback.claimReducer.startdate).format("DD/MM/YYYY") : '';
+                formState.endDate = afterback.claimReducer.enddate ? moment(afterback.claimReducer.enddate).format("DD/MM/YYYY") : '';
+                setFormState(formState);
+                setdateRange((prevState) => ({ ...prevState, startDate: moment(afterback.claimReducer.startdate, 'DD/MM/YYYY'), endDate: moment(afterback.claimReducer.enddate, 'DD/MM/YYYY') }));
+                //setrenderdate((prevState)=>({...prevState,startDate:moment(to).format("DD/MM/YYYY"),endDate:moment(from).format("DD/MM/YYYY")}))
             }
-        } else if (formState.startDate.length < 10 || formState.endDate.length < 10) {
-            dispatch(claimPeriod(false, "", ""))
-        }
-    }, [formState])
+        
+    },[afterback])
+
+
+ 
 
 
     useEffect(() => {
@@ -105,7 +94,32 @@ function ClaimPeriod() {
                 focusedInput: START_DATE,
             })
         }
-    }, [companyresponse.data === false])
+    }, [companyresponse.data])
+
+    const isDateIsValid = (dateString) => moment(dateString, 'DD/MM/YYYY', true).isValid();
+
+
+    useEffect(() => {
+        const startfirst = dateRange && dateRange.startDate && dateRange.startDate._d;
+        const lastdate = dateRange && dateRange.endDate && dateRange.endDate._d;
+        if (afterback.dateClickReducer.data === false && lastdate !== null && startfirst !== null && formState.startDate.length === 10 && formState.endDate.length === 10) {
+            var Difference_In_Time = lastdate.getTime() - startfirst.getTime();
+            var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+            setdateOutrange(Difference_In_Days)
+            if (Difference_In_Days >= 0) {
+                var elmnt = document.getElementById("expensess");
+                elmnt.scrollIntoView(
+                    { behavior: 'smooth' }
+                );
+                dispatch(claimPeriod(true, dateRange.startDate._d, dateRange.endDate._d))
+            }
+        } 
+        else if (formState.startDate.length < 10 || formState.endDate.length < 10) {
+            dispatch(claimPeriod(false, "", ""))
+        }
+    },[formState])
+
+
 
 
 
@@ -113,7 +127,9 @@ function ClaimPeriod() {
     useEffect(() => {
         const startfirst = dateRange && dateRange.startDate && dateRange.startDate._d;
         const lastdate = dateRange && dateRange.endDate && dateRange.endDate._d;
-        if (isDateIsValid(startfirst) && isDateIsValid(lastdate)) {
+        const chek = afterback && afterback.prevPageReducer && afterback.prevPageReducer.data
+        console.log("chek--------chek",chek)
+        if (  !chek && isDateIsValid(startfirst) && isDateIsValid(lastdate)) {
             var elmnt = document.getElementById("expensess");
             elmnt.scrollIntoView(
                 { behavior: 'smooth' }
@@ -134,6 +150,16 @@ function ClaimPeriod() {
             }
         }
     }, [formState, dateRange])
+
+
+
+  
+    useEffect(()=>{
+        console.log("useeffclick")
+        if(afterback && afterback.dateClickReducer && afterback.dateClickReducer.data === true) {
+            dispatch(claimPeriod(true, afterback.claimReducer.startdate, afterback.claimReducer.enddate))
+        }
+    },[afterback.dateClickReducer])
     
 
     let chek = false;
@@ -194,7 +220,6 @@ function ClaimPeriod() {
         } else {
             setDateError(true);
         }
-
     }
 
 
@@ -205,8 +230,9 @@ function ClaimPeriod() {
             if (val.name === e.target.name && val.checked === false) {
                 val.checked = true;
                 const startdate = val.startdate;
-                const enddate = val.enddate
-                setAfterbackDate((prevState) => ({ ...prevState, startdate, enddate }));
+                const enddate = val.enddate;
+                console.log("startdate",startdate,enddate)
+                // setAfterbackDate((prevState) => ({ ...prevState, startdate, enddate }));
                 setDataClick(true)
                 dispatch(dateClick(true))
                 dispatch(claimPeriod(true, val.startdate, val.enddate))
@@ -231,6 +257,9 @@ function ClaimPeriod() {
         })
         setCheckData(mapdata);
     }
+
+    const click = afterback && afterback.dateClickReducer&& afterback.dateClickReducer.data
+    console.log('clicj',click,formState)
 
     return (
         <div
@@ -297,7 +326,8 @@ function ClaimPeriod() {
                                                 // className="date-input"
                                                 id="s_id"
                                                 name="startDate"
-                                                value={formState.startDate}
+                                                value={
+                                                    click === true ? null : formState.startDate}
                                                 placeholder="DD/MM/YY"
                                                 onChange={handleStartDate}
                                             />
@@ -313,7 +343,8 @@ function ClaimPeriod() {
                                                 // className="date-input"
                                                 id="e_id"
                                                 name="endDate"
-                                                value={formState.endDate}
+                                                value={
+                                                    click === true ? null :formState.endDate}
                                                 placeholder="DD/MM/YY"
                                                 onChange={handleStartDate}
                                             />
@@ -352,8 +383,8 @@ function ClaimPeriod() {
                                         horizontalMonthPadding={1}
                                         autoFocusEndDate={true}
                                         numberOfMonths={2}
-                                        startDate={startDate}
-                                        endDate={endDate}
+                                        startDate={ click === true ? null :startDate}
+                                        endDate={ click === true ? null :endDate}
                                         onDatesChange={handleOnDateChange}
                                         focusedInput={dateRange.focusedInput}
                                         onFocusChange={(focusedInput) => {

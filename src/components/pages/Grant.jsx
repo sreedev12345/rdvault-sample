@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { grant } from '../../components/redux/action/Grant';
+import { grant } from '../../components/redux/Grant';
 import { useSelector, useDispatch } from 'react-redux';
+var classNames = require('classnames');
 
 function Grant() {
     const dispatch = useDispatch()
@@ -9,38 +10,37 @@ function Grant() {
     const [grantno, setGrantNo] = useState(false);
     const [grantyes, setGrantYes] = useState(false);
 
-
-    useEffect(()=>{
-        if(grantno===true) {
-            const elmnt = document.getElementById("expense");
-            elmnt.scrollIntoView({behavior: "smooth"});
-        }
-    },[grantno]);
+    console.log("companyclaim-companyclaim",companyclaim)
 
 
-    useEffect(()=>{
-        if(grantyes === true) {
-            const elmnt = document.getElementById("expense");
-            elmnt.scrollIntoView({behavior: "smooth"});
-        }
-    },[grantyes])
 
 
     const handleNo = () => {
         setGrantNo(!grantno);
         setGrantYes(false);
         dispatch(grant(false,!grantno));
+          const elmnt = document.getElementById("expense");
+         elmnt.scrollIntoView({behavior: "smooth"});
     }
 
     const handleYes = () => {
         setGrantNo(false);
         setGrantYes(!grantyes)
         dispatch(grant(!grantyes,false))
+        const elmnt = document.getElementById("expense");
+        elmnt.scrollIntoView({behavior: "smooth"});
     }
 
+    // let classname =classNames({
+    //     companyclaim.claimReducer.claimdata
+    // })
+
     return (
-        <div id="expensess" className={companyclaim.claimReducer.claimdata === true  && 
-            companyclaim.companyReducer.data === true ? "grands_subsidies_section row custom-m-top-40" : "grands_subsidies_section row custom-m-top-40 click"}>
+        <div id="expensess" 
+        className={companyclaim.claimReducer.claimdata === true  
+             ? "grands_subsidies_section row custom-m-top-40" : "grands_subsidies_section row custom-m-top-40 click"
+            }
+             >
             <div className="col-md-3 col-xl-3 col-lg-3 col-sm-3 col-12">
                 <div className="tell-us-about-your-company-left-section">
                     <hr className="tell-us-about-your-company-line" />
@@ -60,8 +60,8 @@ function Grant() {
                         <div className="tell-us-about-your-company-card2">
                             <div className="tell-us-about-your-company-maincard2 column-card-1 custom-m-top-20">
                                 <div className="tell-us-about-your-company-card2-width">
-                                    <div className={ grantno ===true && companyclaim.claimReducer.claimdata === true  && 
-                                                            companyclaim.companyReducer.data === true ||   companyclaim.grantPeriod.data === true? 
+                                    <div className={ companyclaim.claimReducer.claimdata ===true && grantno ===true || 
+                                     companyclaim.claimReducer.claimdata ===true && companyclaim.grantPeriod.data === true? 
                                                             "tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label label-active"
                                                         : "tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label" }>
                                         <div className="tell-us-about-your-company-card2-top">
@@ -73,9 +73,8 @@ function Grant() {
                                                         id="noti_8" value="3"
                                                         type="checkbox"
                                                         checked={
-                                                            companyclaim.grantPeriod.data === true ? true :
-                                                           grantno ===true && companyclaim.claimReducer.claimdata === true  && 
-                                                            companyclaim.companyReducer.data === true ? grantno : false}
+                                                            companyclaim.claimReducer.claimdata === true ?
+                                                             grantno ===true ||  companyclaim.grantPeriod.data ===true ? true : false : false}
                                                         onChange={handleNo
                                                         }
                                                     />
@@ -86,9 +85,8 @@ function Grant() {
                                     </div>
                                 </div>
                                 <div className="tell-us-about-your-company-card2-width">
-                                    <div className={ grantyes ===true && 
-                                    companyclaim.claimReducer.claimdata === true  && 
-                                                            companyclaim.companyReducer.data === true ||  companyclaim.grantPeriod.yes === true ? 
+                                    <div className={ companyclaim.claimReducer.claimdata ===true && grantyes ===true 
+                                     ||  companyclaim.claimReducer.claimdata ===true && companyclaim.grantPeriod.yes === true ? 
                                                             "tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label label-active" :
                                                              "tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label"}>
                                         <div className="tell-us-about-your-company-card2-top">
@@ -101,9 +99,8 @@ function Grant() {
                                                         id="noti_9" value="3"
                                                         type="checkbox"
                                                         checked={ 
-                                                            companyclaim.grantPeriod.yes === true ? true :
-                                                            grantyes ===true && companyclaim.claimReducer.claimdata === true  && 
-                                                            companyclaim.companyReducer.data === true ? grantyes : false}
+                                                            companyclaim.claimReducer.claimdata === true ? 
+                                                            grantyes === true || companyclaim.grantPeriod.yes === true ? true : false : false}
                                                         onChange={handleYes}
                                                     />
                                                     <label className="checkbox-custom-label" for="noti_9"></label>

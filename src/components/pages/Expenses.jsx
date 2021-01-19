@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { useSelector} from 'react-redux';
 
 
@@ -8,15 +8,18 @@ import { useHistory } from "react-router-dom";
 function Expenses() {
     let history = useHistory();
     const companyresponse = useSelector(state => state);
+
+
     const claimPage = ()=>{
         history.push('/secondpage')
     }
 
+    console.log("sree",companyresponse)
+
     return (
         <div id="expense" 
-            className={ companyresponse.grantPeriod.data ===true  || companyresponse.grantPeriod.yes  === true && 
-                companyresponse.companyReducer.data === true && 
-                companyresponse.claimReducer.claimdata === true ? "rdexpenses_section row custom-m-top-40" : 
+            className={ companyresponse.grantPeriod.data ===true  || companyresponse.grantPeriod.yes  === true
+               ? "rdexpenses_section row custom-m-top-40" : 
             "rdexpenses_section row custom-m-top-40 click"}>
             <div className="col-md-3 col-xl-3 col-lg-3 col-sm-3 col-12">
                 <div className="tell-us-about-your-company-left-section">

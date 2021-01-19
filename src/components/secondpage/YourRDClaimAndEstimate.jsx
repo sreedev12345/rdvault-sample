@@ -1,10 +1,11 @@
 // import Header from '../Common/Header';
 // import Footer from '../Common/Footer';
 import React, { useState, useEffect, useRef } from 'react';
-import { claimPeriod } from '../../components/redux/action/ClaimPeriod';
+import { claimPeriod } from '../../components/redux/ClaimPeriod';
+import { firstClick } from '../../components/redux/CompanyDetails'
 import { useSelector, useDispatch } from 'react-redux';
-import { secondPageAction } from '../../components/redux/action/SecondPageAction'
-import { prevPage } from '../../components/redux/action/PrevPage'
+import { secondPageAction } from '../../components/redux/SecondPage'
+import { prevPage } from '../../components/redux/PrevPage'
 import { useHistory } from "react-router-dom";
 import Header from '../pages/Header'
 import Footer from '../pages/Footer'
@@ -61,12 +62,15 @@ const YourRDClaimAndEstimate = () => {
   }, [!companyresponse.companyReducer.data]);
 
   const editCompany = () => {
-    history.push('/')
+    console.log("//////////////////", companyresponse)
+    dispatch(prevPage("company"))
     dispatch(claimPeriod(true, companyresponse.claimReducer.startdate, companyresponse.claimReducer.enddate))
+    history.push('/')
   }
 
 
   const handleEdit = ()=>{
+    console.log("companyresponse--------companyresponse", companyresponse.claimReducer)
     dispatch(prevPage("claimperiod"))
     dispatch(claimPeriod(true, companyresponse.claimReducer.startdate, companyresponse.claimReducer.enddate));
     history.push('/')
@@ -189,7 +193,7 @@ const YourRDClaimAndEstimate = () => {
   }
 
 
-
+console.log("sree-dev-companyresponse",companyresponse)
 
 
   return (

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector,useDispatch } from "react-redux";
-import { companyAction } from '../../components/redux/action/CompanyAction';
-import { keyword } from '../../components/redux/action/keyword'
+import { companyAction } from '../../components/redux/CompanyDetails';
+import { claimPeriod } from '../../components/redux/ClaimPeriod'
+import { keyword } from '../../components/redux/KeyWord'
 import Data from '../common/Data';
 
 
@@ -19,22 +20,26 @@ const CompanyDetails = (props) => {
 
     console.log("index-one",indexone)
 
+    // useEffect(()=>{
+    //       window.scrollTo(0, 0);
+    // },[])
 
 
- 
+    useEffect(()=>{
+        if(indexone.prevPageReducer.data==='company') {
+            window.scrollTo(0, 400);
+        } 
+    })
 
     useEffect(()=>{
         // window.scrollTo(0, 800);
         if(indexone.prevPageReducer.data === 'claimperiod') {
             console.log("inside-useeffect",indexone.prevPageReducer.data)
             console.log("indexone---------indexone",indexone)
-              var elmnt = document.getElementById("rdClaim");
-              elmnt.scrollIntoView({ behavior: "smooth" });
-        }
-    },[indexone]);
-
-
-
+            window.scrollTo(0, 1300);
+        } 
+       
+    })
 
     useEffect(() => {
         const mapData = Data.filter(value =>
@@ -43,6 +48,8 @@ const CompanyDetails = (props) => {
         )
         setRenderData(mapData)
     }, [search])
+
+  
 
 
     const handleChange = (e) => { //search onchange 
@@ -86,6 +93,7 @@ const CompanyDetails = (props) => {
                 return check
             } else if (check.company === e.target.name && check.checked === true) {
                 dispatch(companyAction(false,check.company));
+                dispatch(claimPeriod(false,"",""));
                 check.checked = false;
                 return check
             }

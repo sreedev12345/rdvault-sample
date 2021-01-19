@@ -1,7 +1,7 @@
 
 import { Provider } from "react-redux";
 import Main from '../src/components/pages/Main'
-import Store from '../src/components/redux/store/Store';
+import Stores from '../src/components/redux/Stores';
 
 import YourRDClaimAndEstimate from '../src/components/secondpage/YourRDClaimAndEstimate';
 
@@ -21,7 +21,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Provider store={Store}>
+        <Provider store={Stores}>
           <Route exact path="/" component={Main} />
           <Route path="/secondpage" component={YourRDClaimAndEstimate}/>
         </Provider>

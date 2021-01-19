@@ -6,7 +6,6 @@ import moment from "moment";
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DayPickerRangeController } from 'react-dates';
-import './picker.css'
 import { claimPeriod } from '../../components/redux/ClaimPeriod';
 import { companyAction } from '../../components/redux/CompanyDetails'
 
@@ -14,20 +13,14 @@ import { companyAction } from '../../components/redux/CompanyDetails'
 
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-var regex = /^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$/g;
-
-
 function ClaimPeriod() {
     const START_DATE = 'startDate';
     const END_DATE = 'endDate';
     const dispatch = useDispatch()
     const [checkData, setCheckData] = useState([]);
-    // const { values, subsidiValues, setSubsidiValues } = useContext(Context)
     const companyresponse = useSelector(state => state.companyReducer);
     const afterback = useSelector(state => state)
-    const [dateState, setDateState] = useState(false)
     const [comple, setcomple] = useState(false)
-    const [complete, setComplete] = useState(false)
     const [dateErrorEnd, setDateErrorEnd] = useState(false)
     const [dateError, setDateError] = useState(false)
     const [dateRange, setdateRange] = useState({
@@ -40,64 +33,27 @@ function ClaimPeriod() {
         endDate: '',
     });
 
-    const [dataclick, setDataClick] = useState(false)
-
-  
-
     const [dateoutrange, setdateOutrange] = useState(0);
-
-    const [dateset,setdate] = useState(false);
-
-
-
 
     const { startDate, endDate } = dateRange;
 
-    console.log("afterbackafterback",afterback)
 
-    useEffect(()=>{
+    useEffect(() => {
         setCheckData(Dates)
-    },[])
-
-  
-
-
-   
+    }, [])
 
     useEffect(() => {
-        console.log("ssrrrrrr",afterback.claimReducer)
-         setdate(true)
-            if (afterback.dateClickReducer.data === false && afterback.claimReducer && afterback.claimReducer.claimdata === true && afterback.claimReducer.startdate && afterback.claimReducer.enddate) {
-                console.log("ss",afterback.claimReducer)
-                formState.startDate = afterback.claimReducer.startdate ? moment(afterback.claimReducer.startdate).format("DD/MM/YYYY") : '';
-                formState.endDate = afterback.claimReducer.enddate ? moment(afterback.claimReducer.enddate).format("DD/MM/YYYY") : '';
-                setFormState(formState);
-                setdateRange((prevState) => ({ ...prevState, startDate: moment(afterback.claimReducer.startdate, 'DD/MM/YYYY'), endDate: moment(afterback.claimReducer.enddate, 'DD/MM/YYYY') }));
-                //setrenderdate((prevState)=>({...prevState,startDate:moment(to).format("DD/MM/YYYY"),endDate:moment(from).format("DD/MM/YYYY")}))
-            }
-        
-    },[afterback])
-
-
- 
-
-
-    useEffect(() => {
-        if (companyresponse.data === false) {
-            setFormState({
-                startDate: '',
-                endDate: '',
-            })
-            setdateRange({
-                startDate: null,
-                endDate: null,
-                focusedInput: START_DATE,
-            })
-        }
-    }, [companyresponse.data])
+        const find = afterback && afterback.dateClickReducer && afterback.dateClickReducer.data
+        if (!find && afterback.claimReducer && afterback.claimReducer.claimdata === true && afterback.claimReducer.startdate && afterback.claimReducer.enddate) {
+            formState.startDate = afterback.claimReducer.startdate ? moment(afterback.claimReducer.startdate).format("DD/MM/YYYY") : '';
+            formState.endDate = afterback.claimReducer.enddate ? moment(afterback.claimReducer.enddate).format("DD/MM/YYYY") : '';
+            setFormState(formState);
+            setdateRange((prevState) => ({ ...prevState, startDate: moment(afterback.claimReducer.startdate, 'DD/MM/YYYY'), endDate: moment(afterback.claimReducer.enddate, 'DD/MM/YYYY') }));
+		} 
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [afterback])
 
     const isDateIsValid = (dateString) => moment(dateString, 'DD/MM/YYYY', true).isValid();
-
 
     useEffect(() => {
         const startfirst = dateRange && dateRange.startDate && dateRange.startDate._d;
@@ -113,23 +69,18 @@ function ClaimPeriod() {
                 );
                 dispatch(claimPeriod(true, dateRange.startDate._d, dateRange.endDate._d))
             }
-        } 
+        }
         else if (formState.startDate.length < 10 || formState.endDate.length < 10) {
             dispatch(claimPeriod(false, "", ""))
-        }
+		}
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
     },[formState])
-
-
-
-
-
 
     useEffect(() => {
         const startfirst = dateRange && dateRange.startDate && dateRange.startDate._d;
         const lastdate = dateRange && dateRange.endDate && dateRange.endDate._d;
         const chek = afterback && afterback.prevPageReducer && afterback.prevPageReducer.data
-        console.log("chek--------chek",chek)
-        if (  !chek && isDateIsValid(startfirst) && isDateIsValid(lastdate)) {
+        if (!chek && isDateIsValid(startfirst) && isDateIsValid(lastdate)) {
             var elmnt = document.getElementById("expensess");
             elmnt.scrollIntoView(
                 { behavior: 'smooth' }
@@ -148,36 +99,37 @@ function ClaimPeriod() {
             } else {
                 setDateErrorEnd(true);
             }
-        }
+		}
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formState, dateRange])
 
-
-
-  
-    useEffect(()=>{
-        console.log("useeffclick")
-        if(afterback && afterback.dateClickReducer && afterback.dateClickReducer.data === true) {
+    useEffect(() => {
+        if (afterback && afterback.dateClickReducer && afterback.dateClickReducer.data === true) {
             dispatch(claimPeriod(true, afterback.claimReducer.startdate, afterback.claimReducer.enddate))
-        }
-    },[afterback.dateClickReducer])
-    
+		}
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [afterback.dateClickReducer])
 
-    let chek = false;
-    const SubCond = endDate !== null ? endDate._isValid : false;
-    const checkss = dateState && dateState.map((vals, id) => {
-        if (vals.check === true || SubCond === true) {
-            chek = vals.check
-            var elmnt = document.getElementById("expensess");
-            elmnt.scrollIntoView(
-                { behavior: 'smooth' }
-            );
-            dispatch(claimPeriod(true))
-        }
-        else if (vals.check === false && chek === false) {
-            chek = vals.check
-        }
-    })
-
+    useEffect(() => {
+        if (companyresponse.data === false) {
+            setFormState({
+                startDate: '',
+                endDate: '',
+            })
+            setdateRange({
+                startDate: null,
+                endDate: null,
+                focusedInput: START_DATE,
+            })
+            Dates.map((val, index) => {
+                return val.checked = false
+            })
+            setcomple(false)
+             dispatch(dateClick(false))
+             dispatch(claimPeriod(false, '',''))
+		}
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [companyresponse.data])
 
 
     const handleStartDate = (e) => {
@@ -194,23 +146,20 @@ function ClaimPeriod() {
             if (formState.endDate && isDateIsValid(value)) {
                 setDateErrorEnd(false)
                 setdateRange((prevState) => ({ ...prevState, endDate: moment(value, 'DD/MM/YYYY') }));
+                dispatch(dateClick(false))
             } else if (name === END_DATE && !isDateIsValid(value)) {
                 setDateErrorEnd(true)
                 setdateRange((prevState) => ({ ...prevState, endDate: '' }));
             }
         }
-
         setFormState((prevState) => ({ ...prevState, [name]: value.replace(/^(\d\d)(\d)$/g, '$1/$2').replace(/^(\d\d\/\d\d)(\d+)$/g, '$1/$2').replace(/[^\d\/]/g, '') }));
     }
-
-   
 
     const handleOnDateChange = ({ startDate, endDate }) => {
         formState.startDate = startDate ? moment(startDate._d).format("DD/MM/YYYY") : '';
         formState.endDate = endDate ? moment(endDate._d).format("DD/MM/YYYY") : '';
         setFormState(formState);
         if (endDate) {
-            setComplete(true)
         } if (endDate && startDate) {
             dispatch(claimPeriod(true, startDate._d, endDate._d))
         }
@@ -222,18 +171,11 @@ function ClaimPeriod() {
         }
     }
 
-
-
     const handelCheckBox = (e) => {
         dispatch(companyAction(true, companyresponse.data1))
         const mapdata = Dates.map((val, index) => {
             if (val.name === e.target.name && val.checked === false) {
                 val.checked = true;
-                const startdate = val.startdate;
-                const enddate = val.enddate;
-                console.log("startdate",startdate,enddate)
-                // setAfterbackDate((prevState) => ({ ...prevState, startdate, enddate }));
-                setDataClick(true)
                 dispatch(dateClick(true))
                 dispatch(claimPeriod(true, val.startdate, val.enddate))
                 dispatch(companyAction(true, companyresponse.data1))
@@ -244,7 +186,6 @@ function ClaimPeriod() {
             }
             else if (val.name === e.target.name && val.checked === true) {
                 dispatch(claimPeriod(false));
-                setDataClick(false)
                 dispatch(dateClick(false))
                 setcomple(false)
                 val.checked = false;
@@ -258,15 +199,11 @@ function ClaimPeriod() {
         setCheckData(mapdata);
     }
 
-    const click = afterback && afterback.dateClickReducer&& afterback.dateClickReducer.data
-    console.log('clicj',click,formState)
+    const click = afterback && afterback.dateClickReducer && afterback.dateClickReducer.data
 
     return (
-        <div
-            id="claim-period" className={companyresponse.data === true ? "row custom-m-top-40" : "row custom-m-top-40 click"}
-        >
-
-            <div id="rdClaim" className=" row custom-m-top-40">
+        <>
+            <div id="claim-period"  className={companyresponse.data === true ? "row custom-m-top-40" : "row custom-m-top-40 click"}>
                 <div className="col-md-3 col-xl-3 col-lg-3 col-sm-3 col-12">
                     <div className="tell-us-about-your-company-left-section">
                         <hr className="tell-us-about-your-company-line" />
@@ -295,7 +232,8 @@ function ClaimPeriod() {
                                                     "custom-checbox-1 tell-us-about-your-company-card-section-label"
                                                 }>
                                                 <span>Period {ele.id}:{
-                                                    ele.startdate.getDate() + " " + months[ele.startdate.getMonth()] + " " + ele.startdate.getFullYear() + " to " + "" +
+                                                    ele.startdate.getDate() + " " + months[ele.startdate.getMonth()] + " " +
+                                                     ele.startdate.getFullYear() + " to "  +
                                                     ele.enddate.getDate() + " " + months[ele.enddate.getMonth()] + " " + ele.enddate.getFullYear()}</span>
                                                 <div className={"cust-checkbox"}>
                                                     <div className="custom-checkbox">
@@ -303,7 +241,8 @@ function ClaimPeriod() {
                                                             className="checkbox-custom"
                                                             id={ele.id}
                                                             type="checkbox"
-                                                            checked={companyresponse.data === true && ele.checked === true ? true : false}
+                                                            checked={companyresponse.data === true && ele.checked === true ? true 
+                                                                : false}
                                                             onChange={handelCheckBox}
                                                         />
                                                         <label className="checkbox-custom-label" for={ele.id}></label>
@@ -344,7 +283,7 @@ function ClaimPeriod() {
                                                 id="e_id"
                                                 name="endDate"
                                                 value={
-                                                    click === true ? null :formState.endDate}
+                                                    click === true ? null : formState.endDate}
                                                 placeholder="DD/MM/YY"
                                                 onChange={handleStartDate}
                                             />
@@ -383,8 +322,8 @@ function ClaimPeriod() {
                                         horizontalMonthPadding={1}
                                         autoFocusEndDate={true}
                                         numberOfMonths={2}
-                                        startDate={ click === true ? null :startDate}
-                                        endDate={ click === true ? null :endDate}
+                                        startDate={click === true ? null : startDate}
+                                        endDate={click === true ? null : endDate}
                                         onDatesChange={handleOnDateChange}
                                         focusedInput={dateRange.focusedInput}
                                         onFocusChange={(focusedInput) => {
@@ -397,30 +336,39 @@ function ClaimPeriod() {
                                     />
 
                                 </div>
-                                 {
-                                    dateoutrange >=0 ?  null : <div className="text-danger">Start date and end date is outside range</div>
-                                } 
+                                {
+                                    dateoutrange >= 0 ? null : <div className="text-danger">Start date and end date is outside range</div>
+                                }
                             </div>
                         </div>
                     </div>
 
                 </div>
-                <div className="col-md-3 col-xl-3 col-lg-3 col-sm-3 col-12">
-                    <div className="tell-us-about-your-company-right-section">
-                        <hr className="tell-us-about-your-company-line1" />
-                        <div className="tell-us-about-your-company-right-section-img">
-                            <img src="assets/images/bulb-icon.png" alt="bulb-icon" />
-                        </div>
-                        <p>We use Companies House publicly available data to retrieve information about your company. By using Companies House data, we can tell you exactly how many R&D claims you can make for your company. If we cannot find your company details not to worry, you can continue to use the company name you entered above.
-                          </p>
 
-
-                    </div>
-
-
-                </div>
+                               
+                                    <div className="col-md-3 col-xl-3 col-lg-3 col-sm-3 col-12">
+                                   {
+                                       !afterback.claimReducer.claimdata &&  afterback.companyReducer.data === true ? 
+                                       <div className="tell-us-about-your-company-right-section">
+                                       <hr className="tell-us-about-your-company-line1" />
+               
+               
+                                       <div className="tell-us-about-your-company-right-section-img">
+                                           <img src="assets/images/bulb-icon.png" alt="bulb-icon" />
+                                       </div>
+                                     
+                                               <p>We use Companies House publicly available data to retrieve information about your company. By using Companies House data, we can tell you exactly how many R&D claims you can make for your company. If we cannot find your company details not to worry, you can continue to use the company name you entered above.
+                                            </p>
+                                       
+               
+                                   </div> : null
+                                   }
+                                </div>
+                                   
+                                
+              
             </div>
-        </div>
+        </>
     )
 }
 

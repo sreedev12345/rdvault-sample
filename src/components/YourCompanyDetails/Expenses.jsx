@@ -1,21 +1,14 @@
-import React,{useEffect} from 'react';
+
 import { useSelector} from 'react-redux';
-
-
 import { useHistory } from "react-router-dom";
 
 
 function Expenses() {
     let history = useHistory();
     const companyresponse = useSelector(state => state);
-
-
     const claimPage = ()=>{
         history.push('/secondpage')
     }
-
-    console.log("sree",companyresponse)
-
     return (
         <div id="expense" 
             className={ companyresponse.grantPeriod.data ===true  || companyresponse.grantPeriod.yes  === true
@@ -51,14 +44,18 @@ function Expenses() {
                 </div>
             </div>
             <div className="col-md-3 col-xl-3 col-lg-3 col-sm-3 col-12">
-                <div className="tell-us-about-your-company-right-section">
+                {
+                    companyresponse.grantPeriod.data ===true  || companyresponse.grantPeriod.yes  === true ?
+                    <div className="tell-us-about-your-company-right-section">
                     <hr className="tell-us-about-your-company-line1" />
                     <div className="tell-us-about-your-company-right-section-img">
                         <img src="assets/images/bulb-icon.png" alt="bulb-icon" />
                     </div>
                     <p>We use Companies House publicly available data to retrieve information about your company. By using Companies House data, we can tell you exactly how many R&D claims you can make for your company. If we cannot find your company details not to worry, you can continue to use the company name you entered above.
                     </p>
-                </div>
+                </div> : null
+
+                }
             </div>
         </div>
     )

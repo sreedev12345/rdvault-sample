@@ -1,14 +1,13 @@
-// import Header from '../Common/Header';
-// import Footer from '../Common/Footer';
 import React, { useState, useEffect, useRef } from 'react';
+import {
+  Link,
+} from "react-router-dom";
 import { claimPeriod } from '../../components/redux/ClaimPeriod';
-import { firstClick } from '../../components/redux/CompanyDetails'
 import { useSelector, useDispatch } from 'react-redux';
-import { secondPageAction } from '../../components/redux/SecondPage'
 import { prevPage } from '../../components/redux/PrevPage'
 import { useHistory } from "react-router-dom";
-import Header from '../pages/Header'
-import Footer from '../pages/Footer'
+import Header from '../../components/common/Header'
+import Footer from '../../components/common/Footer'
 import Select from 'react-select';
 import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
@@ -16,7 +15,6 @@ import SendPdfReport from './SendPdfReport';
 import GetFreeAConsultation from './GetFreeAConsultation';
 import ScheduleConsultation from './ScheduleConsultation';
 import SendBeforePdfDelete from './SendBeforePdfDelete';
-import DeleteDataForEver from './DeleteDataForEver';
 import ThanksWithSocial from './ThanksWithSocial';
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -52,31 +50,28 @@ const YourRDClaimAndEstimate = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [])
-
+  },[])
 
   useEffect(() => {
-    if (!companyresponse.companyReducer.data) {
-      history.push('/')
-    }
-  }, [!companyresponse.companyReducer.data]);
+	if(!companyresponse) {
+		history.push('/')
+	  }
+	   // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[!companyresponse]);
+
+
 
   const editCompany = () => {
-    console.log("//////////////////", companyresponse)
-    dispatch(prevPage("company"))
+	history.push('/')
+	dispatch(prevPage("company"))
     dispatch(claimPeriod(true, companyresponse.claimReducer.startdate, companyresponse.claimReducer.enddate))
-    history.push('/')
   }
 
-
-  const handleEdit = ()=>{
-    console.log("companyresponse--------companyresponse", companyresponse.claimReducer)
+  const handleEdit = () => {
     dispatch(prevPage("claimperiod"))
     dispatch(claimPeriod(true, companyresponse.claimReducer.startdate, companyresponse.claimReducer.enddate));
     history.push('/')
   }
-
-
 
   const focusTextInput = (e) => {
     e.preventDefault()
@@ -87,7 +82,6 @@ const YourRDClaimAndEstimate = () => {
     );
   }
 
-
   const handleText = (e) => {
     e.preventDefault();
     setText(e.target.value)
@@ -97,7 +91,6 @@ const YourRDClaimAndEstimate = () => {
     setLossBtn(!lossbtn)
     setProfitbtn(false)
   }
-
 
   const profit = () => {
     setProfitbtn(!profitbtn)
@@ -128,11 +121,8 @@ const YourRDClaimAndEstimate = () => {
   const keyPress = (e) => {
     if (e.charCode < 48 || e.charCode > 57) {
       e.preventDefault();
-      return false;
     }
   }
-
-
 
   const accountButton = (e) => {
     e.preventDefault();
@@ -167,14 +157,11 @@ const YourRDClaimAndEstimate = () => {
     setRenderData((datas) => {
       return [...datas, obj]
     })
-
     setdata({ accountname: "", amountvalue: "" });
     setselectedOption(null)
     setVolume(0)
     setVolume1(0)
-
   }
-
 
   const handleDelete = (e, val, i) => {
     e.preventDefault();
@@ -192,14 +179,9 @@ const YourRDClaimAndEstimate = () => {
     total += parseInt(renderdata[i].amountvalue)
   }
 
-
-console.log("sree-dev-companyresponse",companyresponse)
-
-
   return (
     <>
       <Header />
-
       {sendPopup && <SendPdfReport closePdf={closePopupPdf} />}
       {freeConsult && <GetFreeAConsultation closeConsultation={closePopupConsult} />}
       {schedulePopup && <ScheduleConsultation closescheduleConsult={closeScheduleConsult} />}
@@ -223,9 +205,7 @@ console.log("sree-dev-companyresponse",companyresponse)
                         <p>
                           <b>Company Name:</b> {companyresponse.companyReducer.data1 ? companyresponse.companyReducer.data1 : "no name found"}
                         </p>
-                        <a className="edit_name_btn" href="#" onClick={editCompany}>
-                          EDIT NAME
-                        </a>
+                        <Link className="edit_name_btn" onClick={editCompany}> EDIT NAME</Link>
                       </div>
                       <div className="rdclaim_estimatecard1_leftcontent">
                         <p>
@@ -235,27 +215,10 @@ console.log("sree-dev-companyresponse",companyresponse)
                               companyresponse.claimReducer.startdate.getFullYear() + " to " +
                               companyresponse.claimReducer.enddate.getDate() + " " + months[companyresponse.claimReducer.enddate.getMonth()] + " " +
                               companyresponse.claimReducer.enddate.getFullYear() : "no dates found"
-                            // companyresponse.claimReducer.startdate.getDate() + " " +
-                            //  months[companyresponse.claimReducer.startdate.getMonth()] + " " + 
-                            //  companyresponse.claimReducerele.startdate.getFullYear() + " to " + "" 
-                            //  ele.enddate.getDate() + " " + months[ele.enddate.getMonth()] + " " + ele.enddate.getFullYear()
                           }
                         </p>
-                        <a className="edit_name_btn" href="#" onClick={handleEdit}>
-                          EDIT PERIOD
-                        </a>
+                        <Link className="edit_name_btn" onClick={handleEdit}>EDIT PERIOD</Link>
                       </div>
-                      {/* <div className="rdclaim_estimatecard1_leftcontent"> */}
-                      {/* <div className="rdclaim_estimatecard1_leftcontent_inner">
-                          <p>
-                            <b>Connected to the Xero Organisation: </b>{' '}
-                          </p>
-                          <p>XYZ long name where characters is not Limited</p>
-                        </div> */}
-                      {/* <a className="edit_name_btn" href="#">
-                          EDIT XERO COMPANY
-                        </a> */}
-                      {/* </div> */}
                       <div className="rdclaim_estimatecard1_leftcontent">
                         <p>
                           <b>
@@ -270,7 +233,6 @@ console.log("sree-dev-companyresponse",companyresponse)
                               <span>NO</span>
                               <span>YES</span>
                             </span>
-                            <a></a>
                           </label>
                         </div>
                       </div>
@@ -282,7 +244,7 @@ console.log("sree-dev-companyresponse",companyresponse)
                 <div className="tell-us-about-your-company-right-section">
                   <hr className="tell-us-about-your-company-line1" />
                   <div className="tell-us-about-your-company-right-section-img">
-                    <img src="assets/images/bulb-icon.png" />
+                    <img src="assets/images/bulb-icon.png" alt="bulb-icon" />
                   </div>
                   <p>
                     Colin needs to write four lined tip to go in this space here but it isnt written
@@ -358,17 +320,24 @@ console.log("sree-dev-companyresponse",companyresponse)
                       Increase Estimate Accuracy: <img src="images/up-arrow.png" alt="arrow" />
                     </h6>
                     <div className="increase-accuracy-btn">
-                      <a href="#">
+                      <Link>
                         <img src="assets/images/refresh-icon.png" alt="refresh-icon" onClick={focusText} />
                         <span className="input-text-second">
-                          <input className="label-active inputs" onKeyPress={keyPress} style={{ Color: "white" }, { border: "none" }} type="text"
-                            ref={textInput} value={text} onChange={handleText} onClick={e => e.preventDefault()} />
-                          {/* <input type="text" ref={textInput} value={text} onChange={handleText} onClick={e=>e.preventDefault()}/> */}
+                          <input
+                            className="label-active inputs"
+                            onKeyPress={keyPress}
+                            style={{ Color: "white",border: "none"  }}
+                            type="text"
+                            ref={textInput}
+                            value={text}
+                            onChange={handleText}
+                            onClick={e => e.preventDefault()}
+                          />
                         </span>
                         <img src="assets/images/edit-pencil-icon.png"
                           alt="pencil-icon"
                           onClick={focusTextInput} />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -392,7 +361,7 @@ console.log("sree-dev-companyresponse",companyresponse)
               <h2>R&D Expenses Information</h2>
               <hr className="tell-us-about-your-company-line2" />
               <div className="rd_expenses_information_img_text">
-                <img src="assets/images/bulb-icon.png" />
+                <img src="assets/images/bulb-icon.png" alt="bulb-icon" />
                 <span>
                   Note you can only make a claim within two years of the last day of your accounting
                   period, please can you check the dates and try again. If you get stuck, click on
@@ -405,10 +374,10 @@ console.log("sree-dev-companyresponse",companyresponse)
                 <thead className="thead-bg">
                   <tr>
                     <th style={{ width: '5%' }}>
-                      <a data-toggle="modal" data-target="#myModal1" className="all-refresh-icon">
-                        <img src="assets/images/refresh-icon.png" />
+                      <Link data-toggle="modal" data-target="#myModal1" className="all-refresh-icon">
+                        <img src="assets/images/refresh-icon.png" alt="refresh-icon" />
                         <p>ALL</p>
-                      </a>
+                      </Link>
                     </th>
                     {/* <th>
                       <a data-toggle="modal" data-target="#myModal3">
@@ -417,29 +386,29 @@ console.log("sree-dev-companyresponse",companyresponse)
                       </a>
                     </th> */}
                     <th>
-                      <a data-toggle="modal" data-target="#myModal2">
+                      <Link data-toggle="modal" data-target="#myModal2" className="all-refresh-icon">
                         Account Name <img src="assets/images/info.png" alt="info" />
-                      </a>
+                      </Link>
                     </th>
                     <th>
-                      <a data-toggle="modal" data-target="#myModal4">
+                      <Link data-toggle="modal" data-target="#myModal4" className="all-refresh-icon">
                         Amount <img src="assets/images/info.png" alt="info" />
-                      </a>
+                      </Link>
                     </th>
                     <th>
-                      <a data-toggle="modal" data-target="#myModal7">
+                      <Link data-toggle="modal" data-target="#myModal7" className="all-refresh-icon">
                         Type of R&D Expense <img src="assets/images/info.png" alt="info" />
-                      </a>
+                      </Link>
                     </th>
                     <th style={{ width: '21%' }} className="extra-width">
-                      <a data-toggle="modal" data-target="#myModal5">
+                      <Link data-toggle="modal" data-target="#myModal5" className="all-refresh-icon">
                         R&D Project(s) <img src="assets/images/info.png" alt="info" />
-                      </a>
+                      </Link>
                     </th>
                     <th style={{ width: '21%' }}>
-                      <a data-toggle="modal" data-target="#myModal6">
+                      <Link data-toggle="modal" data-target="#myModal6" className="all-refresh-icon">
                         Grant/CBILS Funded R&D Project(s) <img src="assets/images/info.png" alt="info" />
-                      </a>
+                      </Link>
                     </th>
                   </tr>
                 </thead>
@@ -783,17 +752,17 @@ console.log("sree-dev-companyresponse",companyresponse)
                         <tr className="row-active" value={i}>
                           <td style={{ width: '5%' }}></td>
                           <td>
-                            <a className="close-icon" href="#">
+                            <Link className="close-icon">
                               <img src="assets/images/close-btn.png" alt="close-btn" onClick={(e) => handleDelete(e, val, i)} />
                               <span>{val ? val.accountname : null}</span>
-                            </a>
+                            </Link>
                           </td>
                           <td>
                             <div className="rupee-editable-btn">
                               <input type="text" value={val ? val.amountvalue : null} />
-                              <a className="" href="#">
+                              <Link>
                                 <img src="assets/images/edit-pencil-icon.png" alt="pencil-icon" />
-                              </a>
+                              </Link>
                             </div>
                             {/* <a className="rupee-edit-btn" href="#">
                         <span>£20,000</span>
@@ -824,19 +793,19 @@ console.log("sree-dev-companyresponse",companyresponse)
                   <tr>
                     <td style={{ width: '5%' }}></td>
                     <td>
-                      <a className="close-icon" href="#">
+                      <Link className="close-icon">
                         <img src="assets/images/add-icon.png" alt="close" onClick={accountButton} />
                         <span><input type="text" name="accountname"
                           ref={accountvalue} onClick={e => e.preventDefault()} value={data.accountname} onChange={handleChange} /></span>
-                      </a>
+                      </Link>
                     </td>
                     <td>
                       <div className="rupee-editable-btn">
                         <input type="text" name="amountvalue" onClick={e => e.preventDefault()}
                           onKeyPress={keyPress} value={data.amountvalue} onChange={handleChange} />
-                        <a className="" href="#">
-                          <img src="assets/images/edit-pencil-icon.png" />
-                        </a>
+                        <Link >
+                          <img src="assets/images/edit-pencil-icon.png" alt="edit-pencil" />
+                        </Link>
                       </div>
                       {/* <a className="rupee-edit-btn" href="#">
                         <span>£20,000</span>
@@ -878,14 +847,14 @@ console.log("sree-dev-companyresponse",companyresponse)
                     <td style={{ width: '5%' }}></td>
                     <td></td>
                     <td>
-                      <a className="close-icon">
+                      <Link className="close-icon">
                         <span>Total Cost of Sales</span>
-                      </a>
+                      </Link>
                     </td>
                     <td>
-                      <a className="total-cost-sales rupee-edit-btn">
+                      <Link className="total-cost-sales rupee-edit-btn">
                         <span>£{total}</span>
-                      </a>
+                      </Link>
                     </td>
                     <td style={{ width: '22%' }}></td>
                     <td></td>
@@ -945,10 +914,10 @@ console.log("sree-dev-companyresponse",companyresponse)
         </div>
         <div className="rd_expenses_accordion">
           <div className="rd_expenses_accordion_heading">
-            <img src="assets/images/xero-logo.png" />
+            <img src="assets/images/xero-logo.png" alt="xero-logo"/>
             <span>You have another 66 accounts unidentified as R&D expenses</span>
             <button className="show-view-btn btn btn-primary">
-              <span>SHOW FULL VIEW</span> <img src="assets/images/collapse-icon.png" />
+              <span>SHOW FULL VIEW</span> <img src="assets/images/collapse-icon.png" alt="collapse-icon"/>
             </button>
           </div>
         </div>
@@ -958,7 +927,7 @@ console.log("sree-dev-companyresponse",companyresponse)
               <div className="tell-us-about-your-company-left-section">
                 <hr className="tell-us-about-your-company-line" />
                 <h3> Your R&D Tax Claim Estimate</h3>
-                <img className="color-logo" src="assets/images/logo1.png" />
+                <img className="color-logo" src="assets/images/logo1.png" alt="logo1"/>
               </div>
             </div>
             <div className="col-md-6 col-xl-6 col-lg-6 col-sm-6 col-12">
@@ -968,7 +937,7 @@ console.log("sree-dev-companyresponse",companyresponse)
                     <div className="your-rd-claim-section6-left">
                       <p>Total R&D Tax Credits and Cash Saved</p>
                       <div className="your-rd-claim-section6-left-content">
-                        <img src="assets/images/down-arrow1.png" />
+                        <img src="assets/images/down-arrow1.png" alt="down-arrow1"/>
                         <span>£166,100</span>
                       </div>
                     </div>
@@ -1018,7 +987,7 @@ console.log("sree-dev-companyresponse",companyresponse)
               <div className="modal-body">
                 <div className="reset-btn">
                   <button className="btn btn-primary">
-                    <img src="assets/images/refresh-icon.png" />
+                    <img src="assets/images/refresh-icon.png" alt="refresh-icon"/>
                     <span>RESET ACCOUNTS</span>
                   </button>
                 </div>
@@ -1035,7 +1004,7 @@ console.log("sree-dev-companyresponse",companyresponse)
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h4 className="modal-title"></h4>
+                {/* <h4 className="modal-title"></h4> */}
                 <button type="button" className="close" data-dismiss="modal">
                   &times;
                 </button>
@@ -1061,7 +1030,7 @@ console.log("sree-dev-companyresponse",companyresponse)
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h4 className="modal-title"></h4>
+                {/* <h4 className="modal-title"></h4> */}
                 <button type="button" className="close" data-dismiss="modal">
                   &times;
                 </button>
@@ -1086,7 +1055,7 @@ console.log("sree-dev-companyresponse",companyresponse)
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h4 className="modal-title"></h4>
+                {/* <h4 className="modal-title"></h4> */}
                 <button type="button" className="close" data-dismiss="modal">
                   &times;
                 </button>
@@ -1112,7 +1081,7 @@ console.log("sree-dev-companyresponse",companyresponse)
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h4 className="modal-title"></h4>
+                {/* <h4 className="modal-title"></h4> */}
                 <button type="button" className="close" data-dismiss="modal">
                   &times;
                 </button>
@@ -1137,7 +1106,7 @@ console.log("sree-dev-companyresponse",companyresponse)
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h4 className="modal-title"></h4>
+                {/* <h4 className="modal-title"></h4> */}
                 <button type="button" className="close" data-dismiss="modal">
                   &times;
                 </button>
@@ -1163,14 +1132,14 @@ console.log("sree-dev-companyresponse",companyresponse)
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h4 className="modal-title"></h4>
+                {/* <h4 className="modal-title"></h4> */}
                 <button type="button" className="close" data-dismiss="modal">
                   &times;
                 </button>
               </div>
               <div className="modal-body">
                 <h6>
-                  <img className="euro-icon" src="images/euro-icon.png" />
+                  <img className="euro-icon" src="images/euro-icon.png" alt="euro-icon"/>
                   Subcontractors/Freelancers
                 </h6>
 
@@ -1188,13 +1157,13 @@ console.log("sree-dev-companyresponse",companyresponse)
                 </div>
                 <div className="next-back-section">
                   <label className="">
-                    <img className="left-arrow" src="images/left-arrow-icon1.png" />
+                    <img className="left-arrow" src="images/left-arrow-icon1.png" alt="arrow-icon1"/>
                     <span>BACK</span>
                   </label>
                   <b></b>
                   <label className="">
                     <span>NEXT</span>
-                    <img className="right-arrow" src="images/right-arrow-icon1.png" />
+                    <img className="right-arrow" src="images/right-arrow-icon1.png" alt="arrow-icon1"/>
                   </label>
                 </div>
               </div>

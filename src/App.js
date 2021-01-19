@@ -1,9 +1,8 @@
-
 import { Provider } from "react-redux";
-import Main from '../src/components/pages/Main'
+import YourCompanyDetails from '../src/components/YourCompanyDetails/YourCompanyDetails'
 import Stores from '../src/components/redux/Stores';
 
-import YourRDClaimAndEstimate from '../src/components/secondpage/YourRDClaimAndEstimate';
+import YourRDClaimAndEstimate from '../src/components/YourRDClaimAndEstimate/YourRDClaimAndEstimate';
 
 
 import {
@@ -17,12 +16,11 @@ import {
 
 
 function App() {
-
   return (
     <Router>
       <div className="App">
         <Provider store={Stores}>
-          <Route exact path="/" component={Main} />
+          <Route exact path="/" component={YourCompanyDetails} />
           <Route path="/secondpage" component={YourRDClaimAndEstimate}/>
         </Provider>
       </div>

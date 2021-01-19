@@ -1,13 +1,13 @@
 
-import Header from './Header';
+import Header from '../common/Header';
 import CompanyDetails from './CompanyDetails'
-import Footer from './Footer'
 import ClaimPeriod from './ClaimPeriod';
 import Grant from './Grant';
 import Expenses from './Expenses';
+import Footer from '../common/Footer'
 
 
-const Main = (props) => {
+const YourCompanyDetails = (props) => {
     return (
         <div>
             <Header />
@@ -21,9 +21,9 @@ const Main = (props) => {
                     </div>
                 </div>
             </section>
-            <Footer />
+          <Footer/>
         </div>
     )
 }
 
-export default Main;
+export default YourCompanyDetails;

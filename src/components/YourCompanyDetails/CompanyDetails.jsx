@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { companyAction } from '../../components/redux/CompanyDetails';
 import { claimPeriod } from '../../components/redux/ClaimPeriod'
 import { keyword } from '../../components/redux/KeyWord'
@@ -7,9 +7,8 @@ import Data from '../common/Data';
 
 
 const CompanyDetails = (props) => {
-    // const [value,setValue] = useState([])
     const dispatch = useDispatch();
-    const indexone = useSelector(state=>state)
+    const indexone = useSelector(state => state)
     const [search, setSearch] = useState(indexone.KeywordReducer ? indexone.KeywordReducer.data ? indexone.KeywordReducer.data : "" : null);
     const [renderData, setRenderData] = useState([]);
     const dataPerPage = 5;
@@ -17,28 +16,18 @@ const CompanyDetails = (props) => {
     const [check, setCheck] = useState([]);
     let checkes = false
 
-
-    console.log("index-one",indexone)
-
-    // useEffect(()=>{
-    //       window.scrollTo(0, 0);
-    // },[])
-
-
-    useEffect(()=>{
-        if(indexone.prevPageReducer.data==='company') {
-            window.scrollTo(0, 400);
-        } 
+    useEffect(() => {
+        if (indexone.prevPageReducer.data === 'company') {
+			var elmnt = document.getElementById("company-id");
+			elmnt.scrollIntoView({ behavior: "smooth" });
+        }
     })
 
-    useEffect(()=>{
-        // window.scrollTo(0, 800);
-        if(indexone.prevPageReducer.data === 'claimperiod') {
-            console.log("inside-useeffect",indexone.prevPageReducer.data)
-            console.log("indexone---------indexone",indexone)
-            window.scrollTo(0, 1300);
-        } 
-       
+    useEffect(() => {
+        if (indexone.prevPageReducer.data === 'claimperiod') {
+			var elmnt = document.getElementById("claim-period");
+			elmnt.scrollIntoView({ behavior: "smooth" });
+        }
     })
 
     useEffect(() => {
@@ -49,9 +38,6 @@ const CompanyDetails = (props) => {
         setRenderData(mapData)
     }, [search])
 
-  
-
-
     const handleChange = (e) => { //search onchange 
         setSearch(e.target.value);
     }
@@ -60,15 +46,12 @@ const CompanyDetails = (props) => {
         e.preventDefault();
         setCurrentPage(currentPage + 1)
     }
-
-
     const prevPage = (e) => { //pagination button for prevpage
         e.preventDefault();
         setCurrentPage(currentPage - 1)
     }
 
     const pageNumber = [];
-
     var i = 1;
     var length = renderData.length;
     for (i = 1; i <= Math.ceil(length / dataPerPage); i++) { //total page number logic
@@ -86,14 +69,14 @@ const CompanyDetails = (props) => {
         const filterdata = renderData.map((check, index) => {
             if (check.company === e.target.name && check.checked === false) {
                 check.checked = true;
-                dispatch(companyAction(true,check.company));
+                dispatch(companyAction(true, check.company));
                 dispatch(keyword(search))
                 var elmnt = document.getElementById("claim-period");
                 elmnt.scrollIntoView({ behavior: "smooth" });
                 return check
             } else if (check.company === e.target.name && check.checked === true) {
-                dispatch(companyAction(false,check.company));
-                dispatch(claimPeriod(false,"",""));
+                dispatch(companyAction(false, check.company));
+                dispatch(claimPeriod(false, "", ""));
                 check.checked = false;
                 return check
             }
@@ -105,8 +88,6 @@ const CompanyDetails = (props) => {
         })
         setCheck(filterdata);
     }
-
-
 
     check && check.map(data => data.checked === true ? checkes = true : false)
 
@@ -157,12 +138,12 @@ const CompanyDetails = (props) => {
                                         return (
                                             <div className="tell-us-about-your-company-maincard2 column-card-1 custom-m-top-20 col-md-6 col-xl-6 col-lg-6 col-sm-6 col-12" key={i}>
                                                 <div className="tell-us-about-your-company-card2-width">
-                                                    <div className= {val.checked === true ? "label-active tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label" : "tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label"}>
+                                                    <div className={val.checked === true ? "label-active tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label" : "tell-us-about-your-company-card2-label tell-us-about-your-company-card-section-label"}>
                                                         <div className="tell-us-about-your-company-card2-top">
                                                             <span>{val.company}</span>
                                                             <div className="cust-checkbox">
                                                                 <div className="custom-checkbox">
-                                                                    <input name={val.company} 
+                                                                    <input name={val.company}
                                                                         className="checkbox-custom" id={val._id} type="checkbox"
                                                                         onChange={handleClick}
                                                                         checked={val.checked ? true : false}
@@ -218,19 +199,22 @@ const CompanyDetails = (props) => {
                     </div>
                 </div>
                 <div className="col-md-3 col-xl-3 col-lg-3 col-sm-3 col-12">
-                    <div className="tell-us-about-your-company-right-section">
+                    {
+                        !indexone.companyReducer.data ? <div className="tell-us-about-your-company-right-section">
                         <hr className="tell-us-about-your-company-line1" />
                         <div className="tell-us-about-your-company-right-section-img">
                             <img src="assets/images/bulb-icon.png" alt="bulb-icon" />
                         </div>
-                        <p>We use Companies House publicly
+                        <p>
+                            We use Companies House publicly
                             available data to retrieve information
                             about your company. By using Companies House data,
                             we can tell you exactly how many R&D claims you can
                             make for your company. If we cannot find your company details
-                            not to worry, you can continue to use the company name you entered above.
+                           not to worry, you can continue to use the company name you entered above.
                     </p>
-                    </div>
+                    </div> : null    
+                    }
                 </div>
             </div>
         </>

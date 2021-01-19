@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  Link
+} from "react-router-dom";
 
 const ThanksWithSocial = ({ closescheduleConsult }) => {
   return (
@@ -20,39 +23,39 @@ const ThanksWithSocial = ({ closescheduleConsult }) => {
             {/* <button className="btn-yellow lightRed">YES,SUBMIT</button> */}
             <ul className="socialIcon">
               <li>
-                <a href="">
+                <Link>
                   <i className="fab fa-facebook-f"></i>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="">
+                <Link>
                   <i className="fab fa-twitter"></i>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="">
+                <Link>
                   <i className="fab fa-pinterest-p"></i>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="">
+                <Link>
                   <i className="fab fa-instagram"></i>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="">
+                <Link>
                   <i className="fab fa-linkedin-in"></i>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="">
+                <Link>
                   <i className="fab fa-google-plus-g"></i>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="">
+                <Link>
                   <i className="fas fa-envelope"></i>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

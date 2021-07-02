@@ -1,13 +1,11 @@
-
 import Header from '../common/Header';
-import CompanyDetails from './CompanyDetails'
+import CompanyDetails from './CompanyDetails';
 import ClaimPeriod from './ClaimPeriod';
 import Grant from './Grant';
 import Expenses from './Expenses';
-import Footer from '../common/Footer'
+import Footer from '../common/Footer';
 
-
-const YourCompanyDetails = (props) => {
+const YourCompanyDetails = () => {
     return (
         <div>
             <Header />

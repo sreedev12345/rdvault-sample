@@ -1,13 +1,11 @@
-import React from 'react'
-import {
-    Link ,
-  } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Footer() {
     return (
         <div>
 
-            <footer class="footer-section">
+            <footer className="footer-section">
                 <ul>
                     <li>
                         <Link>© 2020 RDvault. All rights reserved</Link>
@@ -24,7 +22,7 @@ function Footer() {
                 </ul>
             </footer>
         </div>
-    )
+    );
 }
 
-export default Footer
+export default Footer;

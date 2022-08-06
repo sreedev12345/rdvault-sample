@@ -1,27 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import _ from 'lodash'
 // import { toast } from 'react-toastify';
 // import { freeConsultation } from '../../../Services/company-house';
 // import { LocalStorage } from '../../utils';
-function validateEmail(email) {
-  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
 const GetFreeAConsultation = ({ closeConsultation, onSendPdfComplete}) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
   });
-  const [success, setSuccess] = useState(false);
+  const success = false;
   const [loading, setLoading] = useState(false);
   const [popupThanks,setPopupThanks]=useState(false);
-//   useEffect(() => {
-//     if(!_.isEmpty(onSendPdfComplete)){
-//         const data= onSendPdfComplete && onSendPdfComplete.customer_data;
-//         setFormData(data);
-//         setPopupThanks(true);
-//     }
-// },[onSendPdfComplete]);
+  useEffect(() => {
+    if(!_.isEmpty(onSendPdfComplete)){
+        const data= onSendPdfComplete && onSendPdfComplete.customer_data;
+        setFormData(data);
+        setPopupThanks(true);
+    }
+},[onSendPdfComplete]);
   const onSubmit = () => {
     // const {
     //   companyCreatedData: { id },

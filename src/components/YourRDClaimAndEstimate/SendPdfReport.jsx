@@ -7,12 +7,6 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 
-const checkNan = (numberPayload)=>{
-  if(!numberPayload){
-    return 0;
-  }
-  return !isNaN(numberPayload) ? numberPayload : 0;
-}
 
 const SendPdfReport = ({
   closePdf,
@@ -28,7 +22,7 @@ const SendPdfReport = ({
     email: '',
     phone: '',
   });
-  const [success, setSuccess] = useState(false);
+  const success = false;
   const [loading, setLoading] = useState(false);
   const formDataChange = ({ target: { name, value } }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -39,12 +33,6 @@ const SendPdfReport = ({
     //   claimPeriod: { start, end },
     //   claimDetailFromAuth: { id: claimId },
     // } = LocalStorage.get('core');
-    const createClaimPeriodPayload = {
-    //   company_id: id,
-    //   name,
-    //   date_from: start,
-    //   date_to: end,
-    };
     if (!formData.name) {
     //   toast.error('Please enter name.');
     //   return;
@@ -53,23 +41,6 @@ const SendPdfReport = ({
     //   toast.error('Please enter valid email.');
     //   return;
     }
-    const params = {
-    //   company_id: id,
-    //   grants_and_subsidies: String(isGrantAndSubsidies),
-    //   customer_data: formData,
-      'Profit&LossDetail': {
-        // claim_id: claimId,
-        is_profit_making: !String(estimatedAccuracy).includes('-'),
-        estimate_accuracy: estimatedAccuracy,
-      },
-      rd_claim_estimate: {
-        total_qualifing_expencese: checkNan(valueToDisplayFooter.totalQualifyingRD),
-        total_tax_credit_cash_saved: checkNan(valueToDisplayFooter.taxCredit),
-        claim_fee_amount: checkNan(valueToDisplayFooter.priceToMakeClaim),
-      },
-      BalanceSheet: balanceSheet,
-      'Profit&Loss': zeroProfitAndLoss,
-    };
     setLoading(true);
     // postPdfData(params)
     //   .then((resp) => {

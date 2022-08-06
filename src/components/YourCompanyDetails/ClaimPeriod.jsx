@@ -152,7 +152,7 @@ function ClaimPeriod() {
                 setdateRange((prevState) => ({ ...prevState, endDate: '' }));
             }
         }
-        setFormState((prevState) => ({ ...prevState, [name]: value.replace(/^(\d\d)(\d)$/g, '$1/$2').replace(/^(\d\d\/\d\d)(\d+)$/g, '$1/$2').replace(/[^\d\/]/g, '') }));
+        setFormState((prevState) => ({ ...prevState, [name]: value.replace(/^(\d\d)(\d)$/g, '$1/$2').replace(/^(\d\d\/\d\d)(\d+)$/g, '$1/$2')}));
     }
 
     const handleOnDateChange = ({ startDate, endDate }) => {
